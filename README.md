@@ -1,5 +1,5 @@
 # Hippo2.0
-Made with :heart: **[OsamaBinNaughty](https://github.com/OsamaBinNaughty-hub)** & **[SamClercky](https://github.com/SamClercky)**
+Made with :heart: by **[OsamaBinNaughty](https://github.com/OsamaBinNaughty-hub)** & **[SamClercky](https://github.com/SamClercky)**
 
 ## Table of contents
 
