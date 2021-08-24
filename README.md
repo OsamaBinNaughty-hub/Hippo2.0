@@ -3,6 +3,8 @@ Made with :heart: by **[OsamaBinNaughty](https://github.com/OsamaBinNaughty-hub)
 
 ## Table of contents
 
+* [Preface](#preface)
+
 ## Preface
 This is a project to make our lives a little bit easier at the Free University Brussels (VUB).
 
