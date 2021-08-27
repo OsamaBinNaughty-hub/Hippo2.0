@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:hippo_v2/locator.dart';
 import 'package:hippo_v2/view/page/landing_page.dart';
 import 'package:hippo_v2/view/page/splash_page.dart';
 
 void main() {
+  // to disable landscape mode.
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+
+
   setupLocator();
   runApp(MyApp());
 }
