@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hippo_v2/controller/landing_page_controller.dart';
 import 'package:hippo_v2/view/widget/base_view.dart';
-import 'package:hippo_v2/view/widget/landing_title.dart';
+import 'package:hippo_v2/view/widget/landing_widgets/landing_title.dart';
 
 class Landing extends StatefulWidget {
   const Landing({ Key? key }) : super(key: key);
