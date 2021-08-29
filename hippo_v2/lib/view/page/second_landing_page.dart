@@ -51,7 +51,14 @@ class _SecondLandingState extends State<SecondLanding> {
               ),
             ),
           ),
-          //floatingActionButton: FAB(controller),
+          floatingActionButton: FloatingActionButton.extended(
+            label: Text("Next"),
+            icon: Icon(Icons.navigate_next_rounded),
+            backgroundColor: Color(0xff4285F4),
+            onPressed: (){
+              // TODO: AlertDialog with all the subject
+            },
+          ),
         );
       },
     );
@@ -63,9 +70,9 @@ Widget secondLanding(LandingController controller, BuildContext context){
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
       LandingTitle(
-        first: "What",
-        second: "you",
-        third: "do",
+        first: "Welcome",
+        second: "to",
+        third: "Hippo2.0",
         fontFamily: "Playfair",
         fontSize: 45.0,
         color: "4285F4",

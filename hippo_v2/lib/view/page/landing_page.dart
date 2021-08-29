@@ -17,19 +17,28 @@ import 'package:hippo_v2/view/widget/base_view.dart';
  * --> Why? : Problems to specific users,...
 **/
 
-class Landing extends StatelessWidget {
+class Landing extends StatefulWidget {
   const Landing({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  _LandingState createState() => _LandingState();
+}
 
+class _LandingState extends State<Landing> {
+  int index = 0;
+  String fabName = "Next";
+  Widget fabIcon = Icon(Icons.navigate_next_rounded);
+  FloatingActionButtonLocation fabPos = FloatingActionButtonLocation.endFloat;
+
+  @override
+  Widget build(BuildContext context) {
     // first
     // first name | last name | email
     final firstLanding = Navigator(
       initialRoute: "/",
-      onGenerateRoute: (settings){
+      onGenerateRoute: (settings) {
         return MaterialPageRoute(
-            builder: (context) => FirstLanding(),
+          builder: (context) => FirstLanding(),
         );
       },
     );
@@ -38,46 +47,53 @@ class Landing extends StatelessWidget {
     // ICalUI: level | faculty | course | groups | subjects
     final secondLanding = Navigator(
       initialRoute: "/",
-      onGenerateRoute: (settings){
+      onGenerateRoute: (settings) {
         return MaterialPageRoute(
           builder: (context) => SecondLanding(),
         );
       },
     );
 
+
     return BaseView<LandingController>(
       builder: (context, controller, child) {
         return Scaffold(
           body: IndexedStack(
-            index: controller.tab,
+            index: index,
             children: [
               firstLanding,
               secondLanding,
             ],
           ),
-          bottomNavigationBar: BottomNavigationBar(
-            onTap: controller.nextTab,
-            currentIndex: controller.tab,
-            selectedIconTheme: IconThemeData(opacity: 0.0, size: 0), // for no icons
-            unselectedIconTheme: IconThemeData(opacity: 0.0, size: 0), // for no icons
-            selectedItemColor: Color(0xff4285F4),
-            items: [
-              BottomNavigationBarItem(
-                icon: Icon(Icons.lightbulb),
-                label: "Info",
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.run_circle),
-                label: "ICalUI",
-              ),
-            ],
+          //bottomNavigationBar:
+          floatingActionButton: FloatingActionButton.extended(
+            label: Text(fabName),
+            icon: fabIcon,
+            backgroundColor: Color(0xff4285F4),
+            onPressed: (){
+              setState(() {
+                if (index == 1) {
+                  index = 0;
+                  fabName = "Next";
+                  fabIcon = Icon(Icons.navigate_next_rounded);
+                  fabPos = FloatingActionButtonLocation.endFloat;
+                } else {
+                  index = 1;
+                  fabName = "Back";
+                  fabIcon = Icon(Icons.navigate_before_rounded);
+                  fabPos = FloatingActionButtonLocation.startFloat;
+                }
+              });
+            },
           ),
+          floatingActionButtonLocation: fabPos,
         );
       },
-      onControllerReady: (controller){
+      onControllerReady: (controller) {
         // I don't know yet
       },
     );
   }
 }
+
 

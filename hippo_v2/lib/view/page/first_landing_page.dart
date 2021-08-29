@@ -62,18 +62,23 @@ class _FirstLandingState extends State<FirstLanding> {
               ),
             ),
           ),
-          //floatingActionButton: FAB(controller),
         );
       },
     );
   }
 }
-Widget FAB(LandingController controller){
+
+Widget nextFAB(LandingController controller){
   return FloatingActionButton.extended(
-    onPressed: controller.nextTab(1),
     label: Text("next"),
     icon: Icon(Icons.navigate_next_rounded),
     backgroundColor: Color(0xff4285F4),
+    onPressed: (){
+      //setState(() {
+        //controller.nextTab();
+      //}
+      //);
+    },
   );
 }
 
