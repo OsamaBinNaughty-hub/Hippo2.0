@@ -1,9 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:hippo_v2/ICalInterface/iCalInterface.dart';
+import 'package:hippo_v2/ICalInterface/models/faculty.dart';
+import 'package:hippo_v2/ICalInterface/models/level.dart';
 import 'package:hippo_v2/controller/landing_page_controller.dart';
 import 'package:hippo_v2/view/widget/base_view.dart';
 import 'package:hippo_v2/view/widget/landing_widgets/landing_title.dart';
 import 'package:hippo_v2/view/widget/landing_widgets/multiselect.dart';
+
+class _FieldData {
+  final String labelText;
+  final String disabledLabelText;
+  ICalInterface? selected;
+  List<ICalInterface> contentList;
+
+  _FieldData(
+      this.labelText,
+      this.disabledLabelText,
+      this.contentList,
+      [
+        this.selected,
+      ]) { if (selected == null) selected = ICalInterface.getDefault(); }
+}
 
 class SecondLanding extends StatefulWidget {
   const SecondLanding({Key? key}) : super(key: key);
@@ -13,6 +31,13 @@ class SecondLanding extends StatefulWidget {
 }
 
 class _SecondLandingState extends State<SecondLanding> {
+  int fieldNeedsChoice = 0;
+
+  List<_FieldData> _selectionFields = [
+    _FieldData("What is your level of education?", "", Levels),
+    _FieldData("What is your faculty?", "Choose your level of education first!", Bachelor),
+  ];
+
   @override
   Widget build(BuildContext context) {
     return BaseView<LandingController>(
@@ -63,6 +88,13 @@ class _SecondLandingState extends State<SecondLanding> {
       },
     );
   }
+
+  Function(ICalInterface) onChangeHandler(int index) => (ICalInterface value) {
+    setState(() {
+      fieldNeedsChoice = index +1;
+    });
+  };
+
 }
 
 Widget secondLanding(LandingController controller, BuildContext context){
@@ -79,33 +111,57 @@ Widget secondLanding(LandingController controller, BuildContext context){
         crossAxisAlignment: CrossAxisAlignment.start,
       ),
       SizedBox(height: 12*8,),
-      DropdownList(labelText: "What's your level of education?"),
+      //DropdownList(labelText: "What's your level of education?"),
       SizedBox(height: 3*8,),
-      DropdownList(labelText: "What's your faculty?"),
+      //DropdownList(labelText: "What's your faculty?"),
       SizedBox(height: 3*8,),
-      DropdownList(labelText: "Wich course are you following?"),
+      //DropdownList(labelText: "Wich course are you following?"),
     ],
   );
 }
 
-class DropdownList extends StatefulWidget {
-  final String labelText;
-  DropdownList({
-    required this.labelText
-  });
-
-  @override
-  _DropdownListState createState() => _DropdownListState();
+// OLD DROPDOWN FOR REFERENCE
+Widget drop(){
+  var dropdownValue = "Nothing Selected";
+  return DropdownButton(
+    value: dropdownValue = "Nothing Selected",
+    onChanged: (String? newValue) {
+      //setState(() {
+      //dropdownValue = newValue!;
+      //});
+    },
+    items: <String>['Nothing Selected', 'Bachelor', 'Master']
+        .map<DropdownMenuItem<String>>((String value) {
+      return DropdownMenuItem<String>(
+        value: value,
+        child: Text(value),
+      );
+    }).toList(),
+  );
 }
 
-class _DropdownListState extends State<DropdownList> {
-  String dropdownValue='Nothing Selected';
+class DropdownList  extends StatelessWidget {
+  final List<ICalInterface> contentList;
+  final String labelText;
+  final String disabledLabelText;
+  final bool disabled;
+  final Function(ICalInterface) onChange;
+  final ICalInterface selectItem;
+
+  DropdownList({
+    this.contentList = const[],
+    this.labelText = "",
+    this.disabledLabelText = "",
+    this.disabled = false,
+    required this.onChange,
+    required this.selectItem,
+  });
 
   @override
   Widget build(BuildContext context) {
     return InputDecorator(
       decoration: InputDecoration(
-        labelText: widget.labelText,
+        labelText: disabled ? disabledLabelText : labelText,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(40.0),
         ),
@@ -113,26 +169,30 @@ class _DropdownListState extends State<DropdownList> {
       child: DropdownButtonHideUnderline(
         child: Container(
           height: 20.0,
-          child: DropdownButton(
-            value: dropdownValue,
-            onChanged: (String? newValue) {
-              setState(() {
-                dropdownValue = newValue!;
-              });
+          child: DropdownButton<ICalInterface>(
+            value: selectItem,
+            onChanged: (ICalInterface? value) {
+              if (disabled) {
+                return null;
+              } // disable widget
+              return onChange(value!);
             },
-            items: <String>['Nothing Selected', 'Bachelor', 'Master']
-                .map<DropdownMenuItem<String>>((String value) {
-              return DropdownMenuItem<String>(
-                value: value,
-                child: Text(value),
-              );
-            }).toList(),
+            items: itemsFromList(contentList),
           ),
         ),
       ),
     );
   }
+
+  List<DropdownMenuItem<ICalInterface>> itemsFromList(List<ICalInterface> list) => [ICalInterface.getDefault(), ...list]
+      .map<DropdownMenuItem<ICalInterface>>((ICalInterface value) => DropdownMenuItem<ICalInterface>(
+    value: value,
+    child: Text(value.name),
+  )).toList();
+
 }
+
+
 
 class DropdownMultiSelectDialog extends StatefulWidget {
   const DropdownMultiSelectDialog({Key? key,

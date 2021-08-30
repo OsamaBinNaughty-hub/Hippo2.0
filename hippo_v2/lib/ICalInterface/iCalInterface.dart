@@ -1,6 +1,6 @@
 class ICalInterface{
   final String name = "Nothing Selected";
-  final List<ICalInterface> nextData = const [];
+  final List<ICalInterface>? nextData = const [];
 
   // Make sure that usage is still abstract
   ICalInterface() {
