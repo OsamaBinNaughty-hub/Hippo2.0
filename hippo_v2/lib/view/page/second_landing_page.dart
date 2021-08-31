@@ -36,7 +36,6 @@ class SecondLanding extends StatefulWidget {
 class _SecondLandingState extends State<SecondLanding> {
   int fieldNeedsChoice = 0;
 
-  // TODO: Second/Third contentList of the _FieldData needs to be dependent on first/second choice of the DropdownList
   List<_FieldData> _selectionFields = [
     _FieldData("What is your level of education?", "", Levels),
     _FieldData("What is your faculty?", "Choose your level of education first!", Bachelor),
@@ -133,50 +132,7 @@ class _SecondLandingState extends State<SecondLanding> {
 
 }
 
-Widget secondLanding(LandingController controller, BuildContext context){
-  return Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      LandingTitle(
-        first: "Welcome",
-        second: "to",
-        third: "Hippo2.0",
-        fontFamily: "Playfair",
-        fontSize: 45.0,
-        color: "4285F4",
-        crossAxisAlignment: CrossAxisAlignment.start,
-      ),
-      SizedBox(height: 12*8,),
-      //DropdownList(labelText: "What's your level of education?"),
-      SizedBox(height: 3*8,),
-      //DropdownList(labelText: "What's your faculty?"),
-      SizedBox(height: 3*8,),
-      //DropdownList(labelText: "Wich course are you following?"),
-    ],
-  );
-}
-
-// OLD DROPDOWN FOR REFERENCE
-Widget drop(){
-  var dropdownValue = "Nothing Selected";
-  return DropdownButton(
-    value: dropdownValue = "Nothing Selected",
-    onChanged: (String? newValue) {
-      //setState(() {
-      //dropdownValue = newValue!;
-      //});
-    },
-    items: <String>['Nothing Selected', 'Bachelor', 'Master']
-        .map<DropdownMenuItem<String>>((String value) {
-      return DropdownMenuItem<String>(
-        value: value,
-        child: Text(value),
-      );
-    }).toList(),
-  );
-}
-
-class DropdownList  extends StatelessWidget {
+class DropdownList extends StatefulWidget {
   final List<ICalInterface> contentList;
   final String labelText;
   final String disabledLabelText;
@@ -194,12 +150,17 @@ class DropdownList  extends StatelessWidget {
   });
 
   @override
+  _DropdownListState createState() => _DropdownListState();
+}
+
+class _DropdownListState extends State<DropdownList> {
+  @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         InputDecorator(
           decoration: InputDecoration(
-            labelText: disabled ? disabledLabelText : labelText,
+            labelText: widget.disabled ? widget.disabledLabelText : widget.labelText,
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(40.0),
             ),
@@ -209,16 +170,16 @@ class DropdownList  extends StatelessWidget {
               height: 20.0,
               child: DropdownButton<ICalInterface>(
                 isExpanded: true,
-                value: selectItem,
+                value: widget.selectItem,
                 onChanged: (ICalInterface? value) {
-                  if (disabled) {
+                  if (widget.disabled) {
                     return null;
                   } // disable widget
-                  if(onChange != null){
-                    return onChange(value!);
+                  if(widget.onChange != null){
+                    return widget.onChange(value!);
                   }
                 },
-                items: itemsFromList(contentList),
+                items: itemsFromList(widget.contentList),
               ),
             ),
           ),
@@ -229,7 +190,7 @@ class DropdownList  extends StatelessWidget {
   }
 
   List<DropdownMenuItem<ICalInterface>> itemsFromList(List<ICalInterface> list) {
-    if(disabled == false) {
+    if(widget.disabled == false) {
       return
         [ICalInterface.getDefault(), ...list].map<
             DropdownMenuItem<ICalInterface>>((ICalInterface value) =>
@@ -241,10 +202,7 @@ class DropdownList  extends StatelessWidget {
       return []; // to disable the next dropdown
     }
   }
-
 }
-
-
 
 class DropdownMultiSelectDialog extends StatefulWidget {
   const DropdownMultiSelectDialog({Key? key,
