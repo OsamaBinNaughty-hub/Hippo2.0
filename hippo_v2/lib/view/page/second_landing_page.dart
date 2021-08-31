@@ -107,14 +107,6 @@ class _SecondLandingState extends State<SecondLanding> {
               ),
             ),
           ),
-          floatingActionButton: FloatingActionButton.extended(
-            label: Text("Next"),
-            icon: Icon(Icons.navigate_next_rounded),
-            backgroundColor: Color(0xff4285F4),
-            onPressed: (){
-              // TODO: AlertDialog or next IndexedStack with subjects.
-            },
-          ),
         );
       },
     );

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:hippo_v2/controller/landing_page_controller.dart';
 import 'package:hippo_v2/view/page/first_landing_page.dart';
 import 'package:hippo_v2/view/page/second_landing_page.dart';
+import 'package:hippo_v2/view/page/third_landing_page.dart';
 import 'package:hippo_v2/view/widget/base_view.dart';
 
 /** IDEAS:
@@ -24,9 +25,7 @@ class Landing extends StatefulWidget {
 
 class _LandingState extends State<Landing> {
   int index = 0;
-  String fabName = "Next";
-  Widget fabIcon = Icon(Icons.navigate_next_rounded);
-  FloatingActionButtonLocation fabPos = FloatingActionButtonLocation.endFloat;
+  bool showBackButton = false;
 
   @override
   Widget build(BuildContext context) {
@@ -52,6 +51,16 @@ class _LandingState extends State<Landing> {
       },
     );
 
+    // third
+    // Column with all the groups with checkboxes.
+    final thirdLanding = Navigator(
+      initialRoute: "/",
+      onGenerateRoute: (settings) {
+        return MaterialPageRoute(
+          builder: (context) => ThirdLanding(),
+        );
+      },
+    );
 
     return BaseView<LandingController>(
       builder: (context, controller, child) {
@@ -61,30 +70,55 @@ class _LandingState extends State<Landing> {
             children: [
               firstLanding,
               secondLanding,
+              thirdLanding,
             ],
           ),
           //bottomNavigationBar:
-          floatingActionButton: FloatingActionButton.extended(
-            label: Text(fabName),
-            icon: fabIcon,
-            backgroundColor: Color(0xff4285F4),
-            onPressed: (){
-              setState(() {
-                if (index == 1) {
-                  index = 0;
-                  fabName = "Next";
-                  fabIcon = Icon(Icons.navigate_next_rounded);
-                  fabPos = FloatingActionButtonLocation.endFloat;
-                } else {
-                  index = 1;
-                  fabName = "Back";
-                  fabIcon = Icon(Icons.navigate_before_rounded);
-                  fabPos = FloatingActionButtonLocation.startFloat;
-                }
-              });
-            },
+          floatingActionButton: Stack(
+            children: [
+              Positioned(
+                right: 0,
+                bottom: 20,
+                child: FloatingActionButton.extended(
+                  icon: Icon(Icons.navigate_next_rounded),
+                  label: Text("Next"),
+                  backgroundColor: Color(0xff4285F4),
+                  onPressed: (){
+                    setState(() {
+                      if (index == 1) {
+                        index = 2;
+                      } else if(index == 0) {
+                        index = 1;
+                        showBackButton = true;
+                      }
+                    });
+                  },
+                ),
+              ),
+              Positioned(
+                left: 30,
+                bottom: 20,
+                child: Visibility(
+                  visible: showBackButton,
+                  child: FloatingActionButton.extended(
+                    label: Text("Back"),
+                    icon: Icon(Icons.navigate_before_rounded),
+                    backgroundColor: Color(0xff4285F4),
+                    onPressed: (){
+                      setState(() {
+                        if (index == 2) {
+                          index = 1;
+                        } else if(index == 1) {
+                          index = 0;
+                          showBackButton = false;
+                        }
+                      });
+                    },
+                  ),
+                ),
+              ),
+            ],
           ),
-          floatingActionButtonLocation: fabPos,
         );
       },
       onControllerReady: (controller) {
