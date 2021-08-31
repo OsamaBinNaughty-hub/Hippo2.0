@@ -57,7 +57,6 @@ class _FirstLandingState extends State<FirstLanding> {
                       ),
                     ),
                   ),
-                  //Image.asset("hippoDrawing.jpg"), //TODO: why doesn't this asset load?
                 ],
               ),
             ),

@@ -5,10 +5,8 @@ import 'package:hippo_v2/view/page/first_landing_page.dart';
 import 'package:hippo_v2/view/page/second_landing_page.dart';
 import 'package:hippo_v2/view/widget/base_view.dart';
 
-//TODO: Dependable dropdowns made from previous choice in DropdownList() & DropdownMultiDialog()
-//TODO: Put DropdownList() & DropdownMultiDialog() in own file in landing_widgets dir
-//TODO: Delete BottomNavigationBar (ugly AF) & control the diff tabs with buttons, Using IndexedStack()
 /** IDEAS:
+ * TODO: Nice background art? Something that fills the white.
  * (https://stackoverflow.com/questions/39645641/best-way-to-implement-no-password-sign-in-with-firebase)
  * First name / Last name / (vub) mail adress / (maybe) student ID
  * Press next button
