@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hippo_v2/ICalInterface/iCalInterface.dart';
+import 'package:hippo_v2/ICalInterface/models/course.dart';
 import 'package:hippo_v2/ICalInterface/models/faculty.dart';
 import 'package:hippo_v2/ICalInterface/models/level.dart';
 import 'package:hippo_v2/controller/landing_page_controller.dart';
@@ -24,7 +25,9 @@ class _FieldData {
 }
 
 class SecondLanding extends StatefulWidget {
-  const SecondLanding({Key? key}) : super(key: key);
+  const SecondLanding({
+    Key? key,
+  }) : super(key: key);
 
   @override
   _SecondLandingState createState() => _SecondLandingState();
@@ -33,9 +36,11 @@ class SecondLanding extends StatefulWidget {
 class _SecondLandingState extends State<SecondLanding> {
   int fieldNeedsChoice = 0;
 
+  // TODO: Second/Third contentList of the _FieldData needs to be dependent on first/second choice of the DropdownList
   List<_FieldData> _selectionFields = [
     _FieldData("What is your level of education?", "", Levels),
     _FieldData("What is your faculty?", "Choose your level of education first!", Bachelor),
+    _FieldData("What course are you following?", "Choose your faculty first!", Bachelor_WeBIR),
   ];
 
   @override
@@ -67,7 +72,33 @@ class _SecondLandingState extends State<SecondLanding> {
                       padding: EdgeInsets.fromLTRB(0, 15.0, 0, 30.0),
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(32, 64, 32, 16),
-                        child: secondLanding(controller, context),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            LandingTitle(
+                              first: "Welcome",
+                              second: "to",
+                              third: "Hippo2.0",
+                              fontFamily: "Playfair",
+                              fontSize: 45.0,
+                              color: "4285F4",
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                            ),
+                            SizedBox(height: 12*8,),
+                            Column(
+                              children: _selectionFields
+                                  .asMap().entries.map((entry) => [entry.key, entry.value, onChangeHandler(entry.key)]) // Add index to first element
+                                  .map((item) => DropdownList(
+                                disabled: item[0] as int > fieldNeedsChoice, // disable all further elements
+                                labelText: (item[1] as _FieldData).labelText,
+                                disabledLabelText: (item[1] as _FieldData).disabledLabelText,
+                                contentList: (item[1] as _FieldData).contentList,
+                                selectItem: (item[1] as _FieldData).selected,
+                                onChange: item[2] as Function(ICalInterface),
+                              )).toList(),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
@@ -92,6 +123,11 @@ class _SecondLandingState extends State<SecondLanding> {
   Function(ICalInterface) onChangeHandler(int index) => (ICalInterface value) {
     setState(() {
       fieldNeedsChoice = index +1;
+      _selectionFields[index].selected = value;
+      for (int i = fieldNeedsChoice; i < _selectionFields.length; i++){
+        _selectionFields[i].contentList = value.nextData ?? const [];
+        _selectionFields[i].selected = ICalInterface.getDefault();
+      }
     });
   };
 
@@ -146,7 +182,7 @@ class DropdownList  extends StatelessWidget {
   final String disabledLabelText;
   final bool disabled;
   final Function(ICalInterface) onChange;
-  final ICalInterface selectItem;
+  final ICalInterface? selectItem;
 
   DropdownList({
     this.contentList = const[],
@@ -159,36 +195,52 @@ class DropdownList  extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InputDecorator(
-      decoration: InputDecoration(
-        labelText: disabled ? disabledLabelText : labelText,
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(40.0),
-        ),
-      ),
-      child: DropdownButtonHideUnderline(
-        child: Container(
-          height: 20.0,
-          child: DropdownButton<ICalInterface>(
-            value: selectItem,
-            onChanged: (ICalInterface? value) {
-              if (disabled) {
-                return null;
-              } // disable widget
-              return onChange(value!);
-            },
-            items: itemsFromList(contentList),
+    return Column(
+      children: [
+        InputDecorator(
+          decoration: InputDecoration(
+            labelText: disabled ? disabledLabelText : labelText,
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(40.0),
+            ),
+          ),
+          child: DropdownButtonHideUnderline(
+            child: Container(
+              height: 20.0,
+              child: DropdownButton<ICalInterface>(
+                isExpanded: true,
+                value: selectItem,
+                onChanged: (ICalInterface? value) {
+                  if (disabled) {
+                    return null;
+                  } // disable widget
+                  if(onChange != null){
+                    return onChange(value!);
+                  }
+                },
+                items: itemsFromList(contentList),
+              ),
+            ),
           ),
         ),
-      ),
+        SizedBox(height: 3*8,),
+      ],
     );
   }
 
-  List<DropdownMenuItem<ICalInterface>> itemsFromList(List<ICalInterface> list) => [ICalInterface.getDefault(), ...list]
-      .map<DropdownMenuItem<ICalInterface>>((ICalInterface value) => DropdownMenuItem<ICalInterface>(
-    value: value,
-    child: Text(value.name),
-  )).toList();
+  List<DropdownMenuItem<ICalInterface>> itemsFromList(List<ICalInterface> list) {
+    if(disabled == false) {
+      return
+        [ICalInterface.getDefault(), ...list].map<
+            DropdownMenuItem<ICalInterface>>((ICalInterface value) =>
+            DropdownMenuItem<ICalInterface>(
+              value: value,
+              child: Text(value.name),
+            )).toList();
+    } else {
+      return []; // to disable the next dropdown
+    }
+  }
 
 }
 

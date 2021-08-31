@@ -68,20 +68,6 @@ class _FirstLandingState extends State<FirstLanding> {
   }
 }
 
-Widget nextFAB(LandingController controller){
-  return FloatingActionButton.extended(
-    label: Text("next"),
-    icon: Icon(Icons.navigate_next_rounded),
-    backgroundColor: Color(0xff4285F4),
-    onPressed: (){
-      //setState(() {
-        //controller.nextTab();
-      //}
-      //);
-    },
-  );
-}
-
 Widget firstLanding(LandingController controller, BuildContext context){
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
