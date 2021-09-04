@@ -8,6 +8,7 @@ import 'package:hippo_v2/view/widget/base_view.dart';
 
 /** IDEAS:
  * TODO: Nice background art? Something that fills the white.
+ * TODO: Put the FAB's on the background (dropdown bug)
  * (https://stackoverflow.com/questions/39645641/best-way-to-implement-no-password-sign-in-with-firebase)
  * First name / Last name / (vub) mail adress / (maybe) student ID
  * Press next button
@@ -127,5 +128,3 @@ class _LandingState extends State<Landing> {
     );
   }
 }
-
-

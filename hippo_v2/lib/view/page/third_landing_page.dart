@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:hippo_v2/ICalInterface/models/group.dart';
 import 'package:hippo_v2/controller/landing_page_controller.dart';
+import 'package:hippo_v2/view/page/second_landing_page.dart';
 import 'package:hippo_v2/view/widget/base_view.dart';
 import 'package:hippo_v2/view/widget/landing_widgets/landing_title.dart';
 
+//TODO: how the fuck do I get the data from firstLanding? :(
 class ThirdLanding extends StatefulWidget {
   const ThirdLanding({Key? key}) : super(key: key);
 
@@ -12,6 +15,11 @@ class ThirdLanding extends StatefulWidget {
 }
 
 class _ThirdLandingState extends State<ThirdLanding> {
+
+  List<FieldData> _groups = [
+    FieldData("In wich groups are you in?", "Choose your course first!", Bachelor_WeBIR_CW)
+  ];
+
   @override
   Widget build(BuildContext context) {
     return BaseView<LandingController>(
@@ -69,3 +77,5 @@ class _ThirdLandingState extends State<ThirdLanding> {
     );
   }
 }
+
+

@@ -10,13 +10,13 @@ import 'package:hippo_v2/view/widget/landing_widgets/dropdown.dart';
 import 'package:hippo_v2/view/widget/landing_widgets/landing_title.dart';
 import 'package:hippo_v2/view/widget/landing_widgets/multiselect.dart';
 
-class _FieldData {
+class FieldData {
   final String labelText;
   final String disabledLabelText;
   ICalInterface? selected;
   List<ICalInterface> contentList;
 
-  _FieldData(
+  FieldData(
       this.labelText,
       this.disabledLabelText,
       this.contentList,
@@ -37,10 +37,10 @@ class SecondLanding extends StatefulWidget {
 class _SecondLandingState extends State<SecondLanding> {
   int fieldNeedsChoice = 0;
 
-  List<_FieldData> _selectionFields = [
-    _FieldData("What is your level of education?", "", Levels),
-    _FieldData("What is your faculty?", "Choose your level of education first!", Bachelor),
-    _FieldData("What course are you following?", "Choose your faculty first!", Bachelor_WeBIR),
+  List<FieldData> _selectionFields = [
+    FieldData("What is your level of education?", "", Levels),
+    FieldData("What is your faculty?", "Choose your level of education first!", Bachelor),
+    FieldData("What course are you following?", "Choose your faculty first!", Bachelor_WeBIR),
   ];
 
   @override
@@ -90,10 +90,10 @@ class _SecondLandingState extends State<SecondLanding> {
                                   .asMap().entries.map((entry) => [entry.key, entry.value, onChangeHandler(entry.key)]) // Add index to first element
                                   .map((item) => DropdownList(
                                 disabled: item[0] as int > fieldNeedsChoice, // disable all further elements
-                                labelText: (item[1] as _FieldData).labelText,
-                                disabledLabelText: (item[1] as _FieldData).disabledLabelText,
-                                contentList: (item[1] as _FieldData).contentList,
-                                selectItem: (item[1] as _FieldData).selected,
+                                labelText: (item[1] as FieldData).labelText,
+                                disabledLabelText: (item[1] as FieldData).disabledLabelText,
+                                contentList: (item[1] as FieldData).contentList,
+                                selectItem: (item[1] as FieldData).selected,
                                 onChange: item[2] as Function(ICalInterface),
                               )).toList(),
                             ),

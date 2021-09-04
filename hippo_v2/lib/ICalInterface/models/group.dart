@@ -4,16 +4,24 @@ import 'subject.dart';
 
 class Group implements ICalInterface{
   final String name;
-  final String url;
-  final List<ICalInterface> nextData;
+  final String? url;
+  final List<ICalInterface>? nextData;
 
   const Group({
     required this.name,
-    required this.url,
-    required this.nextData
+    this.url,
+    this.nextData
   });
 }
 
-const List<Group> groupsBachelorIndustrieelIngenieur = <Group>[
-  const Group(name: '1 BA IR. Group A', url: '', nextData: Ba1_IW_subjects),
+const List<Group> Bachelor_WeBIR_CW = <Group>[
+  const Group(name: '1 BA Computerwetenschappen (Keuze)'),
+  const Group(name: '1 BA Computerwetenschappen GRP1'),
+  const Group(name: '1 BA Computerwetenschappen GRP2'),
+  const Group(name: '2 BA Computerwetenschappen GRP1'),
+  const Group(name: '2 BA Computerwetenschappen GRP2'),
+  const Group(name: '3 BA Computerwetenschappen VP voor Prof. BA Toegepaste Informatica'),
+  const Group(name: '3 BA Computerwetenschappen VP voor Prof. BA Toegepaste Informatica (Keuze)'),
+  const Group(name: '3 BA Computerwetenschappen'),
+  const Group(name: '3 BA Computerwetenschappen (Keuze)'),
 ];
