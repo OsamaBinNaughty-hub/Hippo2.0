@@ -7,7 +7,9 @@ import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 
 class SubjectsPage extends StatefulWidget {
-  const SubjectsPage({Key? key}) : super(key: key);
+  const SubjectsPage({
+    Key? key,
+  }) : super(key: key);
 
   @override
   _SubjectsPageState createState() => _SubjectsPageState();
@@ -23,6 +25,9 @@ class _SubjectsPageState extends State<SubjectsPage> {
       },
       builder: (context, controller, child){
         return Scaffold(
+          appBar: AppBar(
+            title: Text('Subjects'),
+          ),
           backgroundColor: Colors.white,
           body: AnnotatedRegion<SystemUiOverlayStyle>(
             value: SystemUiOverlayStyle.light,
@@ -43,106 +48,33 @@ class _SubjectsPageState extends State<SubjectsPage> {
                       physics: AlwaysScrollableScrollPhysics(),
                       padding: EdgeInsets.fromLTRB(0, 15.0, 0, 30.0),
                       child: Padding(
-                        padding: const EdgeInsets.fromLTRB(16, 64, 16, 16),
+                        padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              'Subjects',
-                              style: TextStyle(fontSize: 25.0),
+                            SubjectCard(
+                              subjectName: "Analyse",
+                              classThisWeek: true,
+                              timeOfNextClass: "14:00",
+                              dayOfNextClass: "Monday",
+                              weightedGrade: 0.6,
+                              haveGrade: true,
                             ),
-                            SizedBox(height: 8,),
-                            Card(
-                              clipBehavior: Clip.antiAlias,
-                              child: InkWell(
-                                onTap: (){},
-                                child: Container(
-                                  width: double.infinity,
-                                  child: Column(
-                                    children: [
-                                      ListTile(
-                                        leading: CircleAvatarWithIcon(icon: Icons.school_outlined,),
-                                        trailing: Icon(Icons.keyboard_arrow_right_outlined),
-                                        title: Text(
-                                          "Analyse",
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            color: Color(0xff4285F4),
-                                          ),
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 8.0),
-                                        child: Row(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            Column(
-                                              crossAxisAlignment: CrossAxisAlignment.start,
-                                              children: [
-                                                Text("Next class", style: TextStyle(color: Colors.black.withOpacity(0.5)),),
-                                                Text("Monday • 14:00")
-                                              ],
-                                            ),
-                                            Spacer(),
-                                            CircularPercentIndicator(
-                                              radius: 40.0,
-                                              lineWidth: 5.5,
-                                              animation: true,
-                                              percent: 0.3,
-                                              circularStrokeCap: CircularStrokeCap.round,
-                                              progressColor: Color(0xffffcc00),
-                                              backgroundColor: Color(0x4Dffcc00),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
+                            SubjectCard(
+                              subjectName: "Algebra",
+                              classThisWeek: false,
+                              timeOfNextClass: "08:30",
+                              dayOfNextClass: "Friday",
+                              weightedGrade: 0.1,
+                              haveGrade: true,
                             ),
-                            Card(
-                              clipBehavior: Clip.antiAlias,
-                              child: Column(
-                                children: [
-                                  ListTile(
-                                    leading: CircleAvatarWithIcon(icon: Icons.school_outlined,),
-                                    trailing: Icon(Icons.keyboard_arrow_right_outlined),
-                                    title: Text(
-                                      "Algebra",
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        color: Color(0xff4285F4),
-                                      ),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 8.0),
-                                    child: Row(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            Text("Next class", style: TextStyle(color: Colors.black.withOpacity(0.5)),),
-                                            Text("No class this week")
-                                          ],
-                                        ),
-                                        Spacer(),
-                                        CircularPercentIndicator(
-                                          radius: 40.0,
-                                          lineWidth: 5.5,
-                                          animation: true,
-                                          percent: 0.8,
-                                          circularStrokeCap: CircularStrokeCap.round,
-                                          progressColor: Color(0xff18ba7f),
-                                          backgroundColor: Color(0x4D18ba7f),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
+                            SubjectCard(
+                              subjectName: "G&E",
+                              classThisWeek: true,
+                              timeOfNextClass: "09:45",
+                              dayOfNextClass: "Wednesday",
+                              weightedGrade: 0.0,
+                              haveGrade: false,
                             ),
                           ],
                         ),
@@ -202,3 +134,109 @@ class _SubjectsPageState extends State<SubjectsPage> {
     );
   }
 }
+
+class SubjectCard extends StatefulWidget {
+  final String subjectName;
+  final bool classThisWeek;
+  final String timeOfNextClass;
+  final String dayOfNextClass;
+  final double weightedGrade;
+  final bool haveGrade;
+  const SubjectCard({
+    Key? key,
+    required this.subjectName,
+    required this.classThisWeek,
+    required this.timeOfNextClass,
+    required this.dayOfNextClass,
+    required this.weightedGrade,
+    required this.haveGrade,
+  }) : super(key: key);
+
+  @override
+  _SubjectCardState createState() => _SubjectCardState();
+}
+
+class _SubjectCardState extends State<SubjectCard> {
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      clipBehavior: Clip.antiAlias,
+      child: InkWell(
+        onTap: (){},
+        child: Container(
+          width: double.infinity,
+          child: Column(
+            children: [
+              ListTile(
+                leading: CircleAvatarWithIcon(icon: Icons.school_outlined,),
+                trailing: Icon(Icons.keyboard_arrow_right_outlined),
+                title: Text(
+                  widget.subjectName,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xff4285F4),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 8.0),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text("Next class", style: TextStyle(color: Colors.black.withOpacity(0.5)),),
+                        nextClass(widget.classThisWeek),
+                      ],
+                    ),
+                    Spacer(),
+                    CircularPercentIndicator(
+                      radius: 40.0,
+                      lineWidth: 5.5,
+                      animation: true,
+                      percent: widget.weightedGrade,
+                      circularStrokeCap: CircularStrokeCap.round,
+                      progressColor: progressColorOfGrade(widget.weightedGrade, widget.haveGrade),
+                      backgroundColor: backgroundColorOfGrade(widget.weightedGrade, widget.haveGrade),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget nextClass(bool classThisWeek){
+    if(classThisWeek){
+      return Text("${widget.dayOfNextClass} • ${widget.timeOfNextClass}");
+    } else {
+      return Text("No class this week");
+    }
+  }
+
+  Color progressColorOfGrade(double weightedGrade, bool haveGrade){
+    if(weightedGrade >= 0.5 && haveGrade == true){
+      return Color(0xff18ba7f);
+    } else if(weightedGrade < 0.5 && haveGrade == true){
+      return Color(0xffffcc00);
+    } else {
+      return Color(0xffbababa);
+    }
+  }
+
+  Color backgroundColorOfGrade(double weightedGrade, bool haveGrade){
+    if(weightedGrade >= 0.5 && haveGrade == true){
+      return Color(0x4D18ba7f);
+    } else if(weightedGrade < 0.5 && haveGrade == true){
+      return Color(0x4Dffcc00);
+    } else {
+      return Color(0x4Dbababa);
+    }
+  }
+
+}
+

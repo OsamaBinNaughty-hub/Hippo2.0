@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hippo_v2/controller/main_page_controller.dart';
-import 'package:hippo_v2/view/page/calendar_page.dart';
+import 'package:hippo_v2/view/page/calendar/calendar_page.dart';
 import 'package:hippo_v2/view/page/subjects_page.dart';
 import 'package:hippo_v2/view/widget/base_view.dart';
 

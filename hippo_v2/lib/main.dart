@@ -4,6 +4,7 @@ import 'package:hippo_v2/locator.dart';
 import 'package:hippo_v2/view/page/landing_page.dart';
 import 'package:hippo_v2/view/page/main_page.dart';
 import 'package:hippo_v2/view/page/splash_page.dart';
+import 'package:table_calendar/table_calendar.dart';
 
 void main() {
   // to disable landscape mode.
