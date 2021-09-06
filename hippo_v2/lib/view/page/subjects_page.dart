@@ -260,7 +260,7 @@ class _SubjectCardState extends State<SubjectCard> {
   }
 
   Widget nextClass(bool? classThisWeek){
-    if(classThisWeek != null){
+    if(classThisWeek == true && classThisWeek != null){
       return Text("${widget.dayOfNextClass} • ${widget.timeOfNextClass}");
     } else {
       return Text("No class this week");
