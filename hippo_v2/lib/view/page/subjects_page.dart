@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hippo_v2/controller/subjects_page_controller.dart';
 import 'package:hippo_v2/model/subjects.dart';
+import 'package:hippo_v2/view/page/subject_details_page.dart';
 import 'package:hippo_v2/view/widget/base_view.dart';
 import 'package:hippo_v2/view/widget/circle_avatar_icon.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
@@ -35,17 +36,17 @@ class _SubjectsPageState extends State<SubjectsPage> {
       objective: 10.0,
     ),
     Subject(
-      id: '0',
-      name: 'Analyse',
-      color: Colors.orange,
-      classThisWeek: true,
-      weightedGrade: 0.8,
+      id: '1',
+      name: 'Algebra',
+      color: Colors.blue,
+      classThisWeek: false,
+      weightedGrade: 0.4,
       dayOfNextClass: 'Monday',
       timeOfNextClass: '15:00',
-      writtenGrade: 9.0,
+      writtenGrade: 4.0,
       oralGrade: 8.0,
-      location: 'Building A',
-      teacher: 'Osama BinNaughty',
+      location: 'Building B',
+      teacher: 'Sam Clercky',
       note: 'This is obviously a note',
       objective: 10.0,
     ),
@@ -152,6 +153,7 @@ class _SubjectsPageState extends State<SubjectsPage> {
         weightedGrade: e.weightedGrade,
         dayOfNextClass: e.dayOfNextClass,
         timeOfNextClass: e.timeOfNextClass,
+        subject: e,
       )).toList();
     } else {
       return [
@@ -173,13 +175,15 @@ class SubjectCard extends StatefulWidget {
   final double? weightedGrade;
   final String? dayOfNextClass;
   final String? timeOfNextClass;
+  final Subject subject;
   const SubjectCard({
     Key? key,
     required this.name,
     this.classThisWeek,
     this.weightedGrade,
     this.dayOfNextClass,
-    this.timeOfNextClass
+    this.timeOfNextClass,
+    required this.subject,
   }) : super(key: key);
 
   @override
@@ -192,7 +196,14 @@ class _SubjectCardState extends State<SubjectCard> {
     return Card(
       clipBehavior: Clip.antiAlias,
       child: InkWell(
-        onTap: (){},
+        onTap: (){
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) =>
+                SubjectDetails(subject: widget.subject)
+            ),
+          );
+        },
         child: Container(
           width: double.infinity,
           child: Column(
