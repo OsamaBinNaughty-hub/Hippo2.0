@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hippo_v2/controller/subjects_page_controller.dart';
+import 'package:hippo_v2/model/subjects.dart';
 import 'package:hippo_v2/view/widget/base_view.dart';
 import 'package:hippo_v2/view/widget/circle_avatar_icon.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
@@ -52,30 +53,7 @@ class _SubjectsPageState extends State<SubjectsPage> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            SubjectCard(
-                              subjectName: "Analyse",
-                              classThisWeek: true,
-                              timeOfNextClass: "14:00",
-                              dayOfNextClass: "Monday",
-                              weightedGrade: 0.6,
-                              haveGrade: true,
-                            ),
-                            SubjectCard(
-                              subjectName: "Algebra",
-                              classThisWeek: false,
-                              timeOfNextClass: "08:30",
-                              dayOfNextClass: "Friday",
-                              weightedGrade: 0.1,
-                              haveGrade: true,
-                            ),
-                            SubjectCard(
-                              subjectName: "G&E",
-                              classThisWeek: true,
-                              timeOfNextClass: "09:45",
-                              dayOfNextClass: "Wednesday",
-                              weightedGrade: 0.0,
-                              haveGrade: false,
-                            ),
+
                           ],
                         ),
                       ),
@@ -136,20 +114,10 @@ class _SubjectsPageState extends State<SubjectsPage> {
 }
 
 class SubjectCard extends StatefulWidget {
-  final String subjectName;
-  final bool classThisWeek;
-  final String timeOfNextClass;
-  final String dayOfNextClass;
-  final double weightedGrade;
-  final bool haveGrade;
+  final Subject subject;
   const SubjectCard({
     Key? key,
-    required this.subjectName,
-    required this.classThisWeek,
-    required this.timeOfNextClass,
-    required this.dayOfNextClass,
-    required this.weightedGrade,
-    required this.haveGrade,
+    required this.subject,
   }) : super(key: key);
 
   @override
@@ -171,7 +139,7 @@ class _SubjectCardState extends State<SubjectCard> {
                 leading: CircleAvatarWithIcon(icon: Icons.school_outlined,),
                 trailing: Icon(Icons.keyboard_arrow_right_outlined),
                 title: Text(
-                  widget.subjectName,
+                  widget.subject.name,
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     color: Color(0xff4285F4),
@@ -187,7 +155,7 @@ class _SubjectCardState extends State<SubjectCard> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text("Next class", style: TextStyle(color: Colors.black.withOpacity(0.5)),),
-                        nextClass(widget.classThisWeek),
+                        nextClass(widget.subject.classThisWeek),
                       ],
                     ),
                     Spacer(),
@@ -195,10 +163,10 @@ class _SubjectCardState extends State<SubjectCard> {
                       radius: 40.0,
                       lineWidth: 5.5,
                       animation: true,
-                      percent: widget.weightedGrade,
+                      percent: percentOfWeightedGrade(widget.subject.weightedGrade),
                       circularStrokeCap: CircularStrokeCap.round,
-                      progressColor: progressColorOfGrade(widget.weightedGrade, widget.haveGrade),
-                      backgroundColor: backgroundColorOfGrade(widget.weightedGrade, widget.haveGrade),
+                      progressColor: progressColorOfGrade(widget.subject.weightedGrade),
+                      backgroundColor: backgroundColorOfGrade(widget.subject.weightedGrade),
                     ),
                   ],
                 ),
@@ -210,29 +178,41 @@ class _SubjectCardState extends State<SubjectCard> {
     );
   }
 
-  Widget nextClass(bool classThisWeek){
-    if(classThisWeek){
-      return Text("${widget.dayOfNextClass} • ${widget.timeOfNextClass}");
+  double percentOfWeightedGrade(double? weightedGrade){
+    if(weightedGrade == null){
+      return 0.0;
+    } else {
+      return weightedGrade;
+    }
+  }
+
+  Widget nextClass(bool? classThisWeek){
+    if(classThisWeek != null){
+      return Text("${widget.subject.dayOfNextClass} • ${widget.subject.timeOfNextClass}");
     } else {
       return Text("No class this week");
     }
   }
 
-  Color progressColorOfGrade(double weightedGrade, bool haveGrade){
-    if(weightedGrade >= 0.5 && haveGrade == true){
-      return Color(0xff18ba7f);
-    } else if(weightedGrade < 0.5 && haveGrade == true){
-      return Color(0xffffcc00);
+  Color progressColorOfGrade(double? weightedGrade){
+    if(weightedGrade != null){
+      if(weightedGrade >= 0.5){
+        return Color(0xff18ba7f);
+      } else {
+        return Color(0xffffcc00);
+      }
     } else {
       return Color(0xffbababa);
     }
   }
 
-  Color backgroundColorOfGrade(double weightedGrade, bool haveGrade){
-    if(weightedGrade >= 0.5 && haveGrade == true){
-      return Color(0x4D18ba7f);
-    } else if(weightedGrade < 0.5 && haveGrade == true){
-      return Color(0x4Dffcc00);
+  Color backgroundColorOfGrade(double? weightedGrade){
+    if(weightedGrade != null){
+      if(weightedGrade >= 0.5){
+        return Color(0x4D18ba7f);
+      } else {
+        return Color(0x4Dffcc00);
+      }
     } else {
       return Color(0x4Dbababa);
     }
