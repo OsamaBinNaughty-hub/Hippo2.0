@@ -12,6 +12,7 @@ class Subject{
   String? location = null;
   String? teacher = null;
   String? note = null;
+  double? objective = null;
   Color color;
 
   Subject({
@@ -26,6 +27,7 @@ class Subject{
     this.location,
     this.teacher,
     this.note,
+    this.objective,
     required this.color,
   });
 }

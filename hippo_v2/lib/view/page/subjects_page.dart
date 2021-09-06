@@ -18,6 +18,40 @@ class SubjectsPage extends StatefulWidget {
 
 class _SubjectsPageState extends State<SubjectsPage> {
   var isDialOpen = ValueNotifier<bool>(false);
+  List<Subject> subjects = [
+    Subject(
+      id: '0',
+      name: 'Analyse',
+      color: Colors.orange,
+      classThisWeek: true,
+      weightedGrade: 0.8,
+      dayOfNextClass: 'Monday',
+      timeOfNextClass: '15:00',
+      writtenGrade: 9.0,
+      oralGrade: 8.0,
+      location: 'Building A',
+      teacher: 'Osama BinNaughty',
+      note: 'This is obviously a note',
+      objective: 10.0,
+    ),
+    Subject(
+      id: '0',
+      name: 'Analyse',
+      color: Colors.orange,
+      classThisWeek: true,
+      weightedGrade: 0.8,
+      dayOfNextClass: 'Monday',
+      timeOfNextClass: '15:00',
+      writtenGrade: 9.0,
+      oralGrade: 8.0,
+      location: 'Building A',
+      teacher: 'Osama BinNaughty',
+      note: 'This is obviously a note',
+      objective: 10.0,
+    ),
+
+  ];
+
   @override
   Widget build(BuildContext context) {
     return BaseView<SubjectsPageController>(
@@ -52,9 +86,7 @@ class _SubjectsPageState extends State<SubjectsPage> {
                         padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-
-                          ],
+                          children: _loadSubjectCards(subjects),
                         ),
                       ),
                     ),
@@ -111,13 +143,43 @@ class _SubjectsPageState extends State<SubjectsPage> {
       },
     );
   }
+
+  List<Widget> _loadSubjectCards(List<Subject> subjects){
+    if(subjects.isNotEmpty){
+      return subjects.map((e) => SubjectCard(
+        name: e.name,
+        classThisWeek: e.classThisWeek,
+        weightedGrade: e.weightedGrade,
+        dayOfNextClass: e.dayOfNextClass,
+        timeOfNextClass: e.timeOfNextClass,
+      )).toList();
+    } else {
+      return [
+        Center(
+          child: Text(
+            "There are no subjects",
+            style: TextStyle(color: Colors.black.withOpacity(0.6)),
+          ),
+        ),
+      ];
+    }
+  }
+
 }
 
 class SubjectCard extends StatefulWidget {
-  final Subject subject;
+  final String name;
+  final bool? classThisWeek;
+  final double? weightedGrade;
+  final String? dayOfNextClass;
+  final String? timeOfNextClass;
   const SubjectCard({
     Key? key,
-    required this.subject,
+    required this.name,
+    this.classThisWeek,
+    this.weightedGrade,
+    this.dayOfNextClass,
+    this.timeOfNextClass
   }) : super(key: key);
 
   @override
@@ -139,7 +201,7 @@ class _SubjectCardState extends State<SubjectCard> {
                 leading: CircleAvatarWithIcon(icon: Icons.school_outlined,),
                 trailing: Icon(Icons.keyboard_arrow_right_outlined),
                 title: Text(
-                  widget.subject.name,
+                  widget.name,
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     color: Color(0xff4285F4),
@@ -155,7 +217,7 @@ class _SubjectCardState extends State<SubjectCard> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text("Next class", style: TextStyle(color: Colors.black.withOpacity(0.5)),),
-                        nextClass(widget.subject.classThisWeek),
+                        nextClass(widget.classThisWeek),
                       ],
                     ),
                     Spacer(),
@@ -163,10 +225,10 @@ class _SubjectCardState extends State<SubjectCard> {
                       radius: 40.0,
                       lineWidth: 5.5,
                       animation: true,
-                      percent: percentOfWeightedGrade(widget.subject.weightedGrade),
+                      percent: percentOfWeightedGrade(widget.weightedGrade),
                       circularStrokeCap: CircularStrokeCap.round,
-                      progressColor: progressColorOfGrade(widget.subject.weightedGrade),
-                      backgroundColor: backgroundColorOfGrade(widget.subject.weightedGrade),
+                      progressColor: progressColorOfGrade(widget.weightedGrade),
+                      backgroundColor: backgroundColorOfGrade(widget.weightedGrade),
                     ),
                   ],
                 ),
@@ -188,7 +250,7 @@ class _SubjectCardState extends State<SubjectCard> {
 
   Widget nextClass(bool? classThisWeek){
     if(classThisWeek != null){
-      return Text("${widget.subject.dayOfNextClass} • ${widget.subject.timeOfNextClass}");
+      return Text("${widget.dayOfNextClass} • ${widget.timeOfNextClass}");
     } else {
       return Text("No class this week");
     }
