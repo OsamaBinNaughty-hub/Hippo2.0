@@ -33,7 +33,7 @@ class _SubjectsPageState extends State<SubjectsPage> {
       location: 'Building A',
       teacher: 'Osama BinNaughty',
       note: 'This is obviously a note',
-      objective: 10.0,
+      objective: 19.0,
     ),
     Subject(
       id: '1',
@@ -45,9 +45,18 @@ class _SubjectsPageState extends State<SubjectsPage> {
       timeOfNextClass: '15:00',
       writtenGrade: 4.0,
       oralGrade: 8.0,
-      location: 'Building B',
-      teacher: 'Sam Clercky',
-      note: 'This is obviously a note',
+      objective: 10.0,
+    ),
+    Subject(
+      id: '2',
+      name: 'G&E',
+      color: Colors.purple,
+      classThisWeek: true,
+      dayOfNextClass: 'Friday',
+      timeOfNextClass: '09:00',
+      writtenGrade: 9.0,
+      oralGrade: 8.0,
+      teacher: 'Mr. PooPooHead',
       objective: 10.0,
     ),
 
@@ -253,7 +262,7 @@ class _SubjectCardState extends State<SubjectCard> {
 
   double percentOfWeightedGrade(double? weightedGrade){
     if(weightedGrade == null){
-      return 0.0;
+      return 0.01;
     } else {
       return weightedGrade;
     }
