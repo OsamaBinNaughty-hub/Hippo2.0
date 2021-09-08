@@ -51,6 +51,7 @@ class _SubjectDetailsState extends State<SubjectDetails> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+                            //TODO: Information Card
                             Card(
                               clipBehavior: Clip.antiAlias,
                               child: Container(
@@ -82,6 +83,7 @@ class _SubjectDetailsState extends State<SubjectDetails> {
                               ),
                             ),
                             SizedBox(height: 8.0,),
+                            //TODO: Your average Card
                             Card(
                               clipBehavior: Clip.antiAlias,
                               child: Column(
@@ -153,6 +155,8 @@ class _SubjectDetailsState extends State<SubjectDetails> {
                                 ],
                               ),
                             ),
+                            SizedBox(height: 8.0,),
+                            //TODO: Objective Card
                             Card(
                               clipBehavior: Clip.antiAlias,
                               child: Column(
@@ -163,7 +167,7 @@ class _SubjectDetailsState extends State<SubjectDetails> {
                                     child: Column(
                                       children: [
                                         LinearPercentIndicator(
-                                          width: MediaQuery.of(context).size.width-9*8,
+                                          width: MediaQuery.of(context).size.width-9*8, // TODO: how does this look on different phones?
                                           animation: true,
                                           lineHeight: 20.0,
                                           animationDuration: 2000,
@@ -221,6 +225,174 @@ class _SubjectDetailsState extends State<SubjectDetails> {
                                       child: ListTile(
                                         leading: Icon(Icons.arrow_forward),
                                         title: Text("Edit", style: TextStyle(color: Colors.black.withOpacity(0.5)),),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            SizedBox(height: 8.0,),
+                            // TODO: Weekly schedule Card --> fix this dogshit code :(
+                            Card(
+                              clipBehavior: Clip.antiAlias,
+                              child: Column(
+                                children: [
+                                  ListTile(
+                                    leading: CircleAvatarWithIcon(
+                                      icon: Icons.format_list_bulleted_outlined,
+                                      color: widget.subject.color,
+                                    ),
+                                    title: Text(
+                                      "Weekly schedule",
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(height: 3*8,),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Column(
+                                        children: [
+                                          CircleAvatarWithDay(text: 'M',color: widget.subject.color, chosen: true,),
+                                          SizedBox(height: 8,),
+                                          CircleAvatarWithDay(text: 'F',color: widget.subject.color, chosen: true,),
+                                        ],
+                                      ),
+                                      SizedBox(width: 6*8,),
+                                      Column(
+                                        children: [
+                                          CircleAvatarWithDay(text: 'T',color: widget.subject.color, chosen: false,),
+                                          SizedBox(height: 8,),
+                                          CircleAvatarWithDay(text: 'S',color: widget.subject.color, chosen: false,),
+                                        ],
+                                      ),
+                                      SizedBox(width: 6*8,),
+                                      Column(
+                                        children: [
+                                          CircleAvatarWithDay(text: 'W',color: widget.subject.color, chosen: false,),
+                                          SizedBox(height: 8,),
+                                          CircleAvatarWithDay(text: 'S',color: widget.subject.color, chosen: false,),
+                                        ],
+                                      ),
+                                      SizedBox(width: 6*8,),
+                                      Column(
+                                        children: [
+                                          CircleAvatarWithDay(text: 'T',color: widget.subject.color, chosen: true,),
+                                          SizedBox(height: 8,),
+                                          CircleAvatarWithDay(text: 'F',color: Colors.white, chosen: true,),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(height: 4*8,),
+                                  InkWell(
+                                    onTap: (){}, //TODO: Show more --> Timetable(hard) or alertdialog(easy)
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        border: Border(
+                                          top: BorderSide(
+                                              color: Colors.grey.withOpacity(0.2)
+                                          ),
+                                        ),
+                                      ),
+                                      width: double.infinity,
+                                      child: ListTile(
+                                        leading: Icon(Icons.arrow_forward),
+                                        title: Text("Show more", style: TextStyle(color: Colors.black.withOpacity(0.5)),),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            SizedBox(height: 8,),
+                            //TODO: Events Card (Homework/Exams/Reminders)
+                            Card(
+                              clipBehavior: Clip.antiAlias,
+                              child: Column(
+                                children: [
+                                  ListTile(
+                                    leading: CircleAvatarWithIcon(
+                                      icon: Icons.emoji_events_outlined,
+                                      color: widget.subject.color,
+                                    ),
+                                    title: Text(
+                                      "Events",
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(height: 8,),
+                                  Padding(
+                                    padding: const EdgeInsets.all(32.0),
+                                    child: Center(
+                                      child: Text("There are no events", style: TextStyle(color: Colors.black.withOpacity(0.5)),),
+                                    ),
+                                  ),
+                                  SizedBox(height: 2*8,),
+                                  InkWell(
+                                    onTap: (){}, //TODO: Show more --> idk yet (something with events)
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        border: Border(
+                                          top: BorderSide(
+                                              color: Colors.grey.withOpacity(0.2)
+                                          ),
+                                        ),
+                                      ),
+                                      width: double.infinity,
+                                      child: ListTile(
+                                        leading: Icon(Icons.arrow_forward),
+                                        title: Text("Show more", style: TextStyle(color: Colors.black.withOpacity(0.5)),),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            SizedBox(height: 8,),
+                            //TODO: Recent Grades Card
+                            Card(
+                              clipBehavior: Clip.antiAlias,
+                              child: Column(
+                                children: [
+                                  ListTile(
+                                    leading: CircleAvatarWithIcon(
+                                      icon: Icons.emoji_events_outlined,
+                                      color: widget.subject.color,
+                                    ),
+                                    title: Text(
+                                      "Recent grades",
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(height: 8,),
+                                  Padding(
+                                    padding: const EdgeInsets.all(32.0),
+                                    child: Center(
+                                      child: Text("There are no recent grades", style: TextStyle(color: Colors.black.withOpacity(0.5)),),
+                                    ),
+                                  ),
+                                  SizedBox(height: 2*8,),
+                                  InkWell(
+                                    onTap: (){}, //TODO: Show more --> Grades
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        border: Border(
+                                          top: BorderSide(
+                                              color: Colors.grey.withOpacity(0.2)
+                                          ),
+                                        ),
+                                      ),
+                                      width: double.infinity,
+                                      child: ListTile(
+                                        leading: Icon(Icons.arrow_forward),
+                                        title: Text("Show more", style: TextStyle(color: Colors.black.withOpacity(0.5)),),
                                       ),
                                     ),
                                   ),
