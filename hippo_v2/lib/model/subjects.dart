@@ -8,6 +8,7 @@ class Subject{
   String? timeOfNextClass = null;
   double? weightedGrade = null;
   double? writtenGrade = null;
+  double? practicalGrade = null;
   double? oralGrade = null;
   String? location = null;
   String? teacher = null;
@@ -23,6 +24,7 @@ class Subject{
     this.timeOfNextClass,
     this.weightedGrade,
     this.writtenGrade,
+    this.practicalGrade,
     this.oralGrade,
     this.location,
     this.teacher,

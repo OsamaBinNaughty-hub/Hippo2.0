@@ -25,22 +25,21 @@ class _SubjectsPageState extends State<SubjectsPage> {
       name: 'Analyse',
       color: Colors.orange,
       classThisWeek: true,
-      weightedGrade: 0.8,
       dayOfNextClass: 'Monday',
       timeOfNextClass: '15:00',
-      writtenGrade: 9.0,
-      oralGrade: 8.0,
+      writtenGrade: 19.0,
+      //oralGrade: 8.0,
+      //practicalGrade: 8.0,
       location: 'Building A',
       teacher: 'Osama BinNaughty',
       note: 'This is obviously a note',
-      objective: 19.0,
+      objective: 20.0,
     ),
     Subject(
       id: '1',
       name: 'Algebra',
       color: Colors.blue,
       classThisWeek: false,
-      weightedGrade: 0.4,
       dayOfNextClass: 'Monday',
       timeOfNextClass: '15:00',
       writtenGrade: 4.0,
@@ -115,8 +114,8 @@ class _SubjectsPageState extends State<SubjectsPage> {
             curve: Curves.bounceInOut,
             children: [
               SpeedDialChild(
-                child: Icon(Icons.school_outlined, color: Colors.white,),
-                backgroundColor: Color(0xff4285F4),
+                child: Icon(Icons.school_outlined, color: Color(0xff4285F4),),
+                backgroundColor: Colors.white,
                 onTap: (){
                   //TODO: add subject
                 },
@@ -126,19 +125,8 @@ class _SubjectsPageState extends State<SubjectsPage> {
                 labelBackgroundColor: Colors.black,
               ),
               SpeedDialChild(
-                child: Icon(Icons.emoji_events_outlined, color: Colors.white,),
-                backgroundColor: Color(0xff4285F4),
-                onTap: (){
-                  //TODO: add grade
-                },
-                label: "Grade",
-                labelStyle:
-                TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
-                labelBackgroundColor: Colors.black,
-              ),
-              SpeedDialChild(
-                child: Icon(Icons.science_outlined, color: Colors.white,),
-                backgroundColor: Color(0xff4285F4),
+                child: Icon(Icons.science_outlined, color: Color(0xff4285F4),),
+                backgroundColor: Colors.white,
                 onTap: (){
                   //TODO: import from uni
                 },
