@@ -6,6 +6,7 @@ import 'package:hippo_v2/model/subjects.dart';
 import 'package:hippo_v2/view/widget/base_view.dart';
 import 'package:hippo_v2/view/widget/circle_avatar_icon.dart';
 import 'package:hippo_v2/view/widget/subject_details_widgets/information_card.dart';
+import 'package:hippo_v2/view/widget/subject_details_widgets/weeklySchedule_card.dart';
 import 'package:hippo_v2/view/widget/subject_details_widgets/yourAverage_card.dart';
 import 'package:hippo_v2/view/widget/subject_details_widgets/yourObjective_card.dart';
 
@@ -69,7 +70,7 @@ class _SubjectDetailsState extends State<SubjectDetails> {
                             YourObjectiveCard(subject: widget.subject),
                             SizedBox(height: 8.0,),
                             // TODO: Weekly schedule Card --> fix this dogshit code :(
-
+                            WeeklyScheduleCard(subject: widget.subject),
                             SizedBox(height: 8,),
                             //TODO: Events Card (Homework/Exams/Reminders)
                             Card(

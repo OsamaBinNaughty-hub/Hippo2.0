@@ -64,4 +64,5 @@ class _CellState extends State<Cell> {
   get currentColor {
     return widget.isSelected ? widget.cellSelectedColor : widget.cellColor;
   }
+
 }

@@ -15,6 +15,7 @@ class Subject{
   String? note = null;
   double? objective = null;
   Color color;
+  final Map<int, List<int>> initialSchedule;
 
   Subject({
     required this.id,
@@ -31,5 +32,14 @@ class Subject{
     this.note,
     this.objective,
     required this.color,
+    this.initialSchedule = const {
+      0: [],
+      1: [],
+      2: [],
+      3: [],
+      4: [],
+      5: [],
+      6: [],
+    },
   });
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hippo_v2/model/subjects.dart';
+import 'package:hippo_v2/view/page/subject_weekly_schedule.dart';
 import 'package:hippo_v2/view/widget/circle_avatar_icon.dart';
 import 'package:hippo_v2/view/widget/subject_details_widgets/bottom_InkWell.dart';
 
@@ -69,7 +70,17 @@ class _WeeklyScheduleCardState extends State<WeeklyScheduleCard> {
             ],
           ),
           SizedBox(height: 4*8,),
-          BottomInkWell(title: "Show more",onTap: (){},) //TODO: Timetable or AlertDialog.
+          BottomInkWell(
+            title: "Show more",
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) =>
+                    SubjectWeeklySchedule(subject: widget.subject,),
+                ),
+              );
+            }
+          ), //TODO: Timetable or AlertDialog.
         ],
       ),
     );
