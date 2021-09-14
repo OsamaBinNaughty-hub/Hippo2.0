@@ -44,5 +44,5 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: data-tree.json
-          path: data_tree_dummy.json
+          path: webscraper/data_tree_dummy.json
           if-no-files-found: error # 'warn' or 'ignore' are also available, defaults to `warn` 
