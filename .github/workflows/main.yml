@@ -33,7 +33,7 @@ jobs:
           
       - name: Install deps
         if: steps.cache-webscraper.outputs.cache-hit != 'true'
-        run: python -m pip install requests BeautifulSoup4
+        run: python -m pip install html5lib requests BeautifulSoup4
 
       - name: Make tree
         run: |
