@@ -35,39 +35,7 @@ class _WeeklyScheduleCardState extends State<WeeklyScheduleCard> {
           SizedBox(height: 3*8,),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Column(
-                children: [
-                  CircleAvatarWithDay(text: 'M',color: widget.subject.color, chosen: true,),
-                  SizedBox(height: 8,),
-                  CircleAvatarWithDay(text: 'F',color: widget.subject.color, chosen: true,),
-                ],
-              ),
-              SizedBox(width: 6*8,),
-              Column(
-                children: [
-                  CircleAvatarWithDay(text: 'T',color: widget.subject.color, chosen: false,),
-                  SizedBox(height: 8,),
-                  CircleAvatarWithDay(text: 'S',color: widget.subject.color, chosen: false,),
-                ],
-              ),
-              SizedBox(width: 6*8,),
-              Column(
-                children: [
-                  CircleAvatarWithDay(text: 'W',color: widget.subject.color, chosen: false,),
-                  SizedBox(height: 8,),
-                  CircleAvatarWithDay(text: 'S',color: widget.subject.color, chosen: false,),
-                ],
-              ),
-              SizedBox(width: 6*8,),
-              Column(
-                children: [
-                  CircleAvatarWithDay(text: 'T',color: widget.subject.color, chosen: true,),
-                  SizedBox(height: 8,),
-                  CircleAvatarWithDay(text: 'F',color: Colors.white, chosen: true,),
-                ],
-              ),
-            ],
+            children: week(widget.subject),
           ),
           SizedBox(height: 4*8,),
           BottomInkWell(
@@ -85,4 +53,80 @@ class _WeeklyScheduleCardState extends State<WeeklyScheduleCard> {
       ),
     );
   }
+
+  //TODO: make this work with List<DateTime> instead of Map<int, List<int>>
+  List<Widget> week(Subject subject){
+    List<Widget> list = [];
+    List days = ['M','T','W','T','F','S','S'];
+    Map<int, List<int>> initialSchedule = {
+      0:[],
+      1:[],
+      2:[],
+      3:[],
+      4:[],
+      5:[],
+      6:[],
+    }; // {0: [], 1: [], 2: [], 3: [], 4: [], 5: [], 6: [],}
+    var i = 0;
+    while (i < 7){
+      List<int>? timerange = initialSchedule[i];
+      bool chosen = false;
+      if(timerange!.isNotEmpty){
+        chosen = true;
+      }
+      list.add(
+        CircleAvatarWithDay(
+          text: days[i],
+          color: subject.color,
+          chosen: chosen,
+        ),
+      );
+      print(list[i]);
+      i=i+1;
+    }
+    // FILLER THIS IS INVINCIBLE
+    list.add(
+      CircleAvatarWithDay(
+        text: 'F',
+        color: Colors.white,
+        chosen: true,
+      ),
+    );
+
+    List<Widget> realList = [
+      Column(
+        children: [
+          list[0],
+          SizedBox(height: 8,),
+          list[4],
+        ],
+      ),
+      SizedBox(width: 6*8,),
+      Column(
+        children: [
+          list[1],
+          SizedBox(height: 8,),
+          list[5],
+        ],
+      ),
+      SizedBox(width: 6*8,),
+      Column(
+        children: [
+          list[2],
+          SizedBox(height: 8,),
+          list[6],
+        ],
+      ),
+      SizedBox(width: 6*8,),
+      Column(
+        children: [
+          list[3],
+          SizedBox(height: 8,),
+          list[7],
+        ],
+      ),
+    ];
+    return realList;
+  }
+
 }

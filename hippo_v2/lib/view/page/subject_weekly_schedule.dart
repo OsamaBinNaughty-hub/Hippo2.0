@@ -9,7 +9,7 @@ class SubjectWeeklySchedule extends StatefulWidget {
   @override
   _SubjectWeeklyScheduleState createState() => _SubjectWeeklyScheduleState();
 }
-
+//TODO: make this work with List<DateTime> instead of Map<int, List<int>>
 class _SubjectWeeklyScheduleState extends State<SubjectWeeklySchedule> {
   @override
   Widget build(BuildContext context) {
@@ -23,13 +23,13 @@ class _SubjectWeeklyScheduleState extends State<SubjectWeeklySchedule> {
         boarderColor: Colors.grey.withOpacity(0.3),
         cellSelectedColor: widget.subject.color,
         initialSchedule: {
-          0: [9],
-          1: [13],
-          2: [14],
-          3: [15],
-          4: [],
-          5: [],
-          6: [],
+          0:[],
+          1:[],
+          2:[],
+          3:[],
+          4:[],
+          5:[],
+          6:[],
         },
       ),
     );

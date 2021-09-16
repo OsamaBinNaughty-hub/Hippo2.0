@@ -16,7 +16,6 @@ class YourAverageCard extends StatefulWidget {
 class _YourAverageCardState extends State<YourAverageCard> {
   @override
   Widget build(BuildContext context) {
-    double? grade = weightedGrade(widget.subject.writtenGrade, widget.subject.practicalGrade, widget.subject.oralGrade);
     return Card(
       clipBehavior: Clip.antiAlias,
       child: Column(
@@ -41,12 +40,12 @@ class _YourAverageCardState extends State<YourAverageCard> {
                 lineWidth: 9.0,
                 animation: true,
                 animationDuration: 2000,
-                percent: percentOfWeightedGrade(grade),
+                percent: 0.9/*widget.subject.percentOfWeightedGrade(grade)*/,
                 circularStrokeCap: CircularStrokeCap.round,
-                progressColor: progressColorOfGrade(grade),
-                backgroundColor: backgroundColorOfGrade(grade),
+                progressColor: Color(0xff18ba7f)/*widget.subject.progressColorOfGrade(grade)*/,
+                backgroundColor: Color(0x4D18ba7f)/*widget.subject.backgroundColorOfGrade(grade)*/,
                 center: Text(
-                  "${weightedGradeOn20(grade)}",
+                  "${18/*widget.subject.totalGradeString(grade)*/}",
                   style: TextStyle(
                     color: Colors.black.withOpacity(0.6),
                     fontWeight: FontWeight.bold,
@@ -57,7 +56,10 @@ class _YourAverageCardState extends State<YourAverageCard> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  _grade(widget.subject.writtenGrade),
+                  Text(
+                    "${/*widget.subject.totalGradeString(theoryGrade)*/18}",
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
+                  ),
                   Text(
                     "Theory",
                     style: TextStyle(color: Colors.black.withOpacity(0.6)),
@@ -68,7 +70,10 @@ class _YourAverageCardState extends State<YourAverageCard> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  _grade(widget.subject.practicalGrade),
+                  Text(
+                    "${/*widget.subject.totalGradeString(practicalGrade)*/18}",
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
+                  ),
                   Text(
                     "Practical",
                     style: TextStyle(color: Colors.black.withOpacity(0.6)),
@@ -79,7 +84,10 @@ class _YourAverageCardState extends State<YourAverageCard> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  _grade(widget.subject.oralGrade),
+                  Text(
+                    "${/*widget.subject.totalGradeString(oralGrade)*/18}",
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
+                  ),
                   Text(
                     "Oral",
                     style: TextStyle(color: Colors.black.withOpacity(0.6)),
@@ -94,89 +102,4 @@ class _YourAverageCardState extends State<YourAverageCard> {
       ),
     );
   }
-
-  double percentOfWeightedGrade(double? weightedGrade){
-    if(weightedGrade == null){
-      return 0.01;
-    } else {
-      return weightedGrade/2/10;
-    }
-  }
-
-  Color progressColorOfGrade(double? weightedGrade){
-    if(weightedGrade != null){
-      if(weightedGrade >= 10){
-        return Color(0xff18ba7f);
-      } else {
-        return Color(0xffffcc00);
-      }
-    } else {
-      return Color(0xffbababa);
-    }
-  }
-
-  Color backgroundColorOfGrade(double? weightedGrade){
-    if(weightedGrade != null){
-      if(weightedGrade >= 10){
-        return Color(0x4D18ba7f);
-      } else {
-        return Color(0x4Dffcc00);
-      }
-    } else {
-      return Color(0x4Dbababa);
-    }
-  }
-
-  String weightedGradeOn20(double? weightedGrade){
-    if(weightedGrade == null){
-      return "-";
-    } else {
-      return "${weightedGrade}";
-    }
-  }
-
-  Widget _grade(double? grade){
-    if(grade == null){
-      return Text("-", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),);
-    } else {
-      return Text("${grade}", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),);
-    }
-  }
-
-  // TODO: This code is so shit. It's 2 o'clock at night... give me a break plz
-  double? weightedGrade(double? writtenGrade, double? practicalGrade, double? oralGrade){
-    String ans = '';
-    if(writtenGrade == null){
-      if(practicalGrade == null){
-        if(oralGrade == null){
-          return null;
-        } else {
-          ans = (oralGrade).toStringAsFixed(1);
-        }
-      } else {
-        if(oralGrade == null){
-          ans = (practicalGrade).toStringAsFixed(1);
-        } else {
-          ans = ((practicalGrade + oralGrade)/2).toStringAsFixed(1);
-        }
-      }
-    } else {
-      if(practicalGrade == null && oralGrade == null){
-        ans = (writtenGrade).toStringAsFixed(1);
-      }
-      if(practicalGrade == null && oralGrade != null){
-        ans = ((writtenGrade + oralGrade)/2).toStringAsFixed(1);
-      }
-      if(oralGrade == null && practicalGrade != null){
-        ans = ((writtenGrade+practicalGrade)/2).toStringAsFixed(1);
-      }
-      if(practicalGrade != null && oralGrade != null){
-        ans = ((writtenGrade+practicalGrade+oralGrade)/3).toStringAsFixed(1);
-      }
-    }
-
-    return double.parse(ans);
-
-  }
-
 }

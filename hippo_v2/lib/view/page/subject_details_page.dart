@@ -55,15 +55,9 @@ class _SubjectDetailsState extends State<SubjectDetails> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             //TODO: Information Card
-                            /*
-                            * Edit information
-                             */
                             InformationCard(subject: widget.subject),
                             SizedBox(height: 8.0,),
                             //TODO: Your average Card
-                            /*
-                            * Edit information
-                             */
                             YourAverageCard(subject: widget.subject),
                             SizedBox(height: 8.0,),
                             //TODO: Objective Card

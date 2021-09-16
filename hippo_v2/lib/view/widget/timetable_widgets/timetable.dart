@@ -99,4 +99,5 @@ class _WeeklyTimeTableState extends State<WeeklyTimeTable> {
     });
     widget.onValueChanged(selected);
   }
+
 }

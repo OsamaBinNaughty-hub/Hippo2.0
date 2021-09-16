@@ -1,7 +1,5 @@
 import 'package:hippo_v2/ICalInterface/iCalInterface.dart';
 
-import 'subject.dart';
-
 class Group implements ICalInterface{
   final String name;
   final String? url;

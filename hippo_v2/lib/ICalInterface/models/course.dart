@@ -1,7 +1,5 @@
 import 'package:hippo_v2/ICalInterface/iCalInterface.dart';
 
-import 'group.dart';
-
 class Course implements ICalInterface{
   final String name;
   final List<ICalInterface>? nextData;
