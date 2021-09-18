@@ -28,8 +28,8 @@ class AppDatabase {
       _openDatabase();
     }
 
-    // if the databse is already opened, awaiting the future will happen instantly
-    // otherwise, awaiting the returned future will take some time - untile complete() is called
+    // if the database is already opened, awaiting the future will happen instantly
+    // otherwise, awaiting the returned future will take some time - until complete() is called
     // on the completer in _openDatabase() below
     return _dbOpenCompleter!.future;
   }
@@ -41,7 +41,7 @@ class AppDatabase {
     final dbPath = join(appDocumentDir.path, 'demo.db');
 
     final database = await databaseFactoryIo.openDatabase(dbPath);
-    //any code awaiting the completer's future will now start executing
+    //any code awaiting the completes future will now start executing
     _dbOpenCompleter?.complete(database);
   }
 

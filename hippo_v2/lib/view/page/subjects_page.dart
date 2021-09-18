@@ -22,7 +22,7 @@ class _SubjectsPageState extends State<SubjectsPage> {
   var isDialOpen = ValueNotifier<bool>(false);
   List<Subject> subjects = [
     Subject(
-      id: '0',
+      id: 0,
       name: 'Analyse',
       nextClass: DateTime(2021,9,25,17,30),
       location: 'Building A',

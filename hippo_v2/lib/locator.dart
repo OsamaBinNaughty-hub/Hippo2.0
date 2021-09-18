@@ -5,6 +5,7 @@ import 'package:hippo_v2/controller/subject_details_page_controller.dart';
 
 import 'controller/main_page_controller.dart';
 import 'controller/subjects_page_controller.dart';
+import 'data/subjects_dao.dart';
 
 GetIt locator = GetIt.instance;
 
@@ -14,4 +15,8 @@ void setupLocator() {
   locator.registerFactory(() => AddSubjectPageController());
   locator.registerFactory(() => SubjectDetailsPageController());
   locator.registerFactory(() => LandingController());
+
+
+  /// SERVICES | DAO's
+  locator.registerSingleton(SubjectDao());
 }
