@@ -70,7 +70,7 @@ class GradeGroup extends Grade {
 }
 
 class Subject{
-  final String id;
+  int id;
   String name;
   DateTime? nextClass;
   //GradeGroup grades; TODO: doesn't work
@@ -91,6 +91,32 @@ class Subject{
     this.color = const Color(0xff4285F4),
     this.schedule = const [],
   });
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'name':name,
+      'nextClass': nextClass,
+      'location': location,
+      'teacher': teacher,
+      'note': note,
+      'color': color,
+      'schedule': schedule,
+    };
+  }
+
+  static Subject fromMap(Map<String, dynamic> map){
+    return Subject(
+      id: map['id'],
+      name:map['name'],
+      nextClass: map['nextClass'],
+      location: map['location'],
+      teacher: map['teacher'],
+      note: map['note'],
+      color: map['color'],
+      schedule: map['schedule'],
+    );
+  }
 
   Widget whatIsNextClass(){
     DateTime? next = this.nextClass;
