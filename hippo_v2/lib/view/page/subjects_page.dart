@@ -20,22 +20,11 @@ class SubjectsPage extends StatefulWidget {
 
 class _SubjectsPageState extends State<SubjectsPage> {
   var isDialOpen = ValueNotifier<bool>(false);
-  List<Subject> subjects = [
-    Subject(
-      id: 0,
-      name: 'Analyse',
-      nextClass: DateTime(2021,9,25,17,30),
-      location: 'Building A',
-      teacher: 'Osama BinNaughty',
-      note: 'This is obviously a note',
-    ),
-  ];
-
   @override
   Widget build(BuildContext context) {
     return BaseView<SubjectsPageController>(
       onControllerReady: (controller){
-
+        controller.initialize();
       },
       builder: (context, controller, child){
         return Scaffold(
@@ -65,7 +54,7 @@ class _SubjectsPageState extends State<SubjectsPage> {
                         padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          children: _loadSubjectCards(subjects),
+                          children: _loadSubjectCards(controller.subjects),
                         ),
                       ),
                     ),
