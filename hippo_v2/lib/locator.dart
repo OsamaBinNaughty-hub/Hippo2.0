@@ -10,6 +10,7 @@ import 'data/subjects_dao.dart';
 GetIt locator = GetIt.instance;
 
 void setupLocator() {
+  /// CONTROLLERS
   locator.registerFactory(() => MainPageController());
   locator.registerFactory(() => SubjectsPageController());
   locator.registerFactory(() => AddSubjectPageController());

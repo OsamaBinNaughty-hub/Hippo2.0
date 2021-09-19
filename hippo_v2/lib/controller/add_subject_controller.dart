@@ -42,7 +42,7 @@ class AddSubjectPageController extends ChangeNotifier{
     return null;
   }
 
-  external int get millisecondsSinceEpoch; // TODO: best practice?
+  external int get millisecondsSinceEpoch;
 
   void addSubject() async {
     final subject = await _subjectDao.insert(
@@ -60,8 +60,4 @@ class AddSubjectPageController extends ChangeNotifier{
     }
     print(subject.toString());
   }
-
-  
-
-
 }
