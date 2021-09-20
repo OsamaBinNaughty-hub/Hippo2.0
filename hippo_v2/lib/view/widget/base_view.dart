@@ -2,24 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:hippo_v2/locator.dart';
 import 'package:provider/provider.dart';
 
-class BaseView<T extends ChangeNotifier> extends StatefulWidget {
-  final Widget Function(BuildContext context, T controller, Widget? child) builder;
-  final Function(T) onControllerReady;
-  BaseView({required this.builder, required this.onControllerReady});
+class BaseView<T extends ChangeNotifier> extends StatelessWidget {
+  final Widget Function(BuildContext context, T controller, Widget? child)
+      builder;
+  final T controller = locator<T>();
 
-  @override
-  _BaseViewState<T> createState() => _BaseViewState<T>();
-}
-
-class _BaseViewState<T extends ChangeNotifier> extends State<BaseView<T>> {
-  T controller = locator<T>();
-
-  @override
-  void initState() {
-    if (widget.onControllerReady != null) {
-      widget.onControllerReady(controller);
-    }
-    super.initState();
+  BaseView({required this.builder, required Function(T) onControllerReady}) {
+    onControllerReady(controller);
   }
 
   @override
@@ -27,7 +16,7 @@ class _BaseViewState<T extends ChangeNotifier> extends State<BaseView<T>> {
     return ChangeNotifierProvider<T>(
       create: (context) => controller,
       child: Consumer<T>(
-        builder: widget.builder,
+        builder: builder,
       ),
     );
   }
