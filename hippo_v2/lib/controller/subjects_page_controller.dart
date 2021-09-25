@@ -11,7 +11,6 @@ class SubjectsPageController extends ChangeNotifier {
   set subjects(List<Subject> value) {
     if (_subjects != value) {
       _subjects = value;
-      print("setter: $_subjects");
       notifyListeners();
     }
   }

@@ -25,7 +25,6 @@ class _SubjectsPageState extends State<SubjectsPage> {
   Widget build(BuildContext context) {
     return BaseView<SubjectsPageController>(
       onControllerReady: (controller) {
-        print("Init");
         controller.initialize();
       },
       builder: (context, controller, child) {
@@ -116,7 +115,6 @@ class _SubjectsPageState extends State<SubjectsPage> {
   }
 
   List<Widget> _loadSubjectCards(List<Subject> subjects) {
-    print("loader: $subjects");
     if (subjects.isNotEmpty) {
       return subjects
           .map((e) => SubjectCard(
