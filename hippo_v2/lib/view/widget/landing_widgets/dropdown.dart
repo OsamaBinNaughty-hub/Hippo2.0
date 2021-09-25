@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:hippo_v2/ICalInterface/iCalInterface.dart';
 
-class DropdownList extends StatefulWidget {
-  final List<ICalInterface> contentList;
+abstract class IDropdownListItem {
+  String getName() => "";
+}
+
+class DropdownList<T extends IDropdownListItem> extends StatefulWidget {
+  final List<T> contentList;
   final String labelText;
   final String disabledLabelText;
   final bool disabled;
-  final Function(ICalInterface) onChange;
-  final ICalInterface? selectItem;
+  final Function(T) onChange;
+  final T? selectItem;
 
   DropdownList({
-    this.contentList = const[],
+    this.contentList = const [],
     this.labelText = "",
     this.disabledLabelText = "",
     this.disabled = false,
@@ -19,17 +22,19 @@ class DropdownList extends StatefulWidget {
   });
 
   @override
-  _DropdownListState createState() => _DropdownListState();
+  _DropdownListState createState() => _DropdownListState<T>();
 }
 
-class _DropdownListState extends State<DropdownList> {
+class _DropdownListState<T extends IDropdownListItem>
+    extends State<DropdownList<T>> {
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         InputDecorator(
           decoration: InputDecoration(
-            labelText: widget.disabled ? widget.disabledLabelText : widget.labelText,
+            labelText:
+                widget.disabled ? widget.disabledLabelText : widget.labelText,
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(40.0),
             ),
@@ -37,36 +42,35 @@ class _DropdownListState extends State<DropdownList> {
           child: DropdownButtonHideUnderline(
             child: Container(
               height: 20.0,
-              child: DropdownButton<ICalInterface>(
+              child: DropdownButton<T>(
                 isExpanded: true,
                 value: widget.selectItem,
-                onChanged: (ICalInterface? value) {
+                onChanged: (T? value) {
                   if (widget.disabled) {
                     return null;
                   } // disable widget
-                  if(widget.onChange != null){
-                    return widget.onChange(value!);
-                  }
+                  return widget.onChange(value!);
                 },
                 items: itemsFromList(widget.contentList),
               ),
             ),
           ),
         ),
-        SizedBox(height: 3*8,),
+        SizedBox(
+          height: 3 * 8,
+        ),
       ],
     );
   }
 
-  List<DropdownMenuItem<ICalInterface>> itemsFromList(List<ICalInterface> list) {
-    if(widget.disabled == false) {
-      return
-        [ICalInterface.getDefault(), ...list].map<
-            DropdownMenuItem<ICalInterface>>((ICalInterface value) =>
-            DropdownMenuItem<ICalInterface>(
-              value: value,
-              child: Text(value.name),
-            )).toList();
+  List<DropdownMenuItem<T>> itemsFromList(List<T> list) {
+    if (widget.disabled == false) {
+      return list
+          .map<DropdownMenuItem<T>>((T value) => DropdownMenuItem<T>(
+                value: value,
+                child: Text(value.getName()),
+              ))
+          .toList();
     } else {
       return []; // to disable the next dropdown
     }

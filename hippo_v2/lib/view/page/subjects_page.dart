@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:hippo_v2/controller/subjects_page_controller.dart';
 import 'package:hippo_v2/model/subjects.dart';
 import 'package:hippo_v2/view/page/add_subject_page.dart';
+import 'package:hippo_v2/view/page/import_from_uni.dart';
 import 'package:hippo_v2/view/page/subject_details_page.dart';
 import 'package:hippo_v2/view/widget/base_view.dart';
 import 'package:hippo_v2/view/widget/circle_avatar_icon.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
-import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 
 class SubjectsPage extends StatefulWidget {
   const SubjectsPage({
@@ -23,10 +24,10 @@ class _SubjectsPageState extends State<SubjectsPage> {
   @override
   Widget build(BuildContext context) {
     return BaseView<SubjectsPageController>(
-      onControllerReady: (controller){
+      onControllerReady: (controller) {
         controller.initialize();
       },
-      builder: (context, controller, child){
+      builder: (context, controller, child) {
         return Scaffold(
           appBar: AppBar(
             title: Text('Subjects'),
@@ -73,30 +74,37 @@ class _SubjectsPageState extends State<SubjectsPage> {
             curve: Curves.bounceInOut,
             children: [
               SpeedDialChild(
-                child: Icon(Icons.school_outlined, color: Color(0xff4285F4),),
+                child: Icon(
+                  Icons.school_outlined,
+                  color: Color(0xff4285F4),
+                ),
                 backgroundColor: Colors.white,
-                onTap: (){
+                onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) =>
-                        AddSubjectPage()
-                    ),
+                    MaterialPageRoute(builder: (context) => AddSubjectPage()),
                   );
                 },
                 label: "Subject",
                 labelStyle:
-                TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
+                    TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
                 labelBackgroundColor: Colors.black,
               ),
               SpeedDialChild(
-                child: Icon(Icons.science_outlined, color: Color(0xff4285F4),),
+                child: Icon(
+                  Icons.science_outlined,
+                  color: Color(0xff4285F4),
+                ),
                 backgroundColor: Colors.white,
-                onTap: (){
-                  //TODO: import from uni
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => ImportFromUni()),
+                  );
                 },
                 label: "Import from University",
                 labelStyle:
-                TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
+                    TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
                 labelBackgroundColor: Colors.black,
               ),
             ],
@@ -106,11 +114,13 @@ class _SubjectsPageState extends State<SubjectsPage> {
     );
   }
 
-  List<Widget> _loadSubjectCards(List<Subject> subjects){
-    if(subjects.isNotEmpty){
-      return subjects.map((e) => SubjectCard(
-        subject: e,
-      )).toList();
+  List<Widget> _loadSubjectCards(List<Subject> subjects) {
+    if (subjects.isNotEmpty) {
+      return subjects
+          .map((e) => SubjectCard(
+                subject: e,
+              ))
+          .toList();
     } else {
       return [
         Center(
@@ -122,7 +132,6 @@ class _SubjectsPageState extends State<SubjectsPage> {
       ];
     }
   }
-
 }
 
 class SubjectCard extends StatefulWidget {
@@ -142,12 +151,11 @@ class _SubjectCardState extends State<SubjectCard> {
     return Card(
       clipBehavior: Clip.antiAlias,
       child: InkWell(
-        onTap: (){
+        onTap: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) =>
-                SubjectDetails(subject: widget.subject)
-            ),
+            MaterialPageRoute(
+                builder: (context) => SubjectDetails(subject: widget.subject)),
           );
         },
         child: Container(
@@ -155,7 +163,9 @@ class _SubjectCardState extends State<SubjectCard> {
           child: Column(
             children: [
               ListTile(
-                leading: CircleAvatarWithIcon(icon: Icons.school_outlined,),
+                leading: CircleAvatarWithIcon(
+                  icon: Icons.school_outlined,
+                ),
                 trailing: Icon(Icons.keyboard_arrow_right_outlined),
                 title: Text(
                   widget.subject.name,
@@ -173,8 +183,13 @@ class _SubjectCardState extends State<SubjectCard> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text("Next class", style: TextStyle(color: Colors.black.withOpacity(0.5)),),
-                        Text("No classes this week")/*widget.subject.whatIsNextClass()*/, //TODO: nextclass
+                        Text(
+                          "Next class",
+                          style:
+                              TextStyle(color: Colors.black.withOpacity(0.5)),
+                        ),
+                        Text(
+                            "No classes this week") /*widget.subject.whatIsNextClass()*/, //TODO: nextclass
                       ],
                     ),
                     Spacer(),
@@ -182,10 +197,13 @@ class _SubjectCardState extends State<SubjectCard> {
                       radius: 40.0,
                       lineWidth: 5.5,
                       animation: true,
-                      percent: 0.9/*widget.subject.percentOfWeightedGrade(grade)*/,
+                      percent:
+                          0.9 /*widget.subject.percentOfWeightedGrade(grade)*/,
                       circularStrokeCap: CircularStrokeCap.round,
-                      progressColor: Color(0xff18ba7f)/*widget.subject.progressColorOfGrade(grade)*/,
-                      backgroundColor: Color(0x4D18ba7f)/*widget.subject.backgroundColorOfGrade(grade)*/,
+                      progressColor: Color(
+                          0xff18ba7f) /*widget.subject.progressColorOfGrade(grade)*/,
+                      backgroundColor: Color(
+                          0x4D18ba7f) /*widget.subject.backgroundColorOfGrade(grade)*/,
                     ),
                   ],
                 ),
@@ -197,4 +215,3 @@ class _SubjectCardState extends State<SubjectCard> {
     );
   }
 }
-

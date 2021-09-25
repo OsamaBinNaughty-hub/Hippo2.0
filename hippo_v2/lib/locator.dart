@@ -1,4 +1,5 @@
 import 'package:get_it/get_it.dart';
+import 'package:hippo_v2/ICalInterface/models/importuni.dart';
 import 'package:hippo_v2/controller/add_subject_controller.dart';
 import 'package:hippo_v2/controller/landing_page_controller.dart';
 import 'package:hippo_v2/controller/subject_details_page_controller.dart';
@@ -17,6 +18,8 @@ void setupLocator() {
   locator.registerFactory(() => SubjectDetailsPageController());
   locator.registerFactory(() => LandingController());
 
+  /// Cache
+  locator.registerSingleton(ImportFromUniCache());
 
   /// SERVICES | DAO's
   locator.registerSingleton(SubjectDao());

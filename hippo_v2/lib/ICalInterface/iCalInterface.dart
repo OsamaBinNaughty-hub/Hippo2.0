@@ -3,7 +3,9 @@
 // ^ the way it is rn, is way too much work to find every group/subject.
 // ^ Maybe get it to work for the 3 years of bachelor Ingenieurswetenschappen & Computerwetenschappen
 
-class ICalInterface{
+import 'package:hippo_v2/view/widget/landing_widgets/dropdown.dart';
+
+class ICalInterface implements IDropdownListItem {
   final String name = "Nothing Selected";
   final List<ICalInterface>? nextData = const [];
 
@@ -16,11 +18,14 @@ class ICalInterface{
   ICalInterface.getDefault();
 
   @override
-  bool operator ==(Object other){
+  bool operator ==(Object other) {
     return other is ICalInterface && other.name == name;
   }
 
   @override
   // TODO: Implement hashCode
   int get hashCode => super.hashCode;
+
+  @override
+  String getName() => name;
 }

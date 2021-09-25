@@ -17,12 +17,13 @@ class FieldData {
   List<ICalInterface> contentList;
 
   FieldData(
-      this.labelText,
-      this.disabledLabelText,
-      this.contentList,
-      [
-        this.selected,
-      ]) { if (selected == null) selected = ICalInterface.getDefault(); }
+    this.labelText,
+    this.disabledLabelText,
+    this.contentList, [
+    this.selected,
+  ]) {
+    if (selected == null) selected = ICalInterface.getDefault();
+  }
 }
 
 class SecondLanding extends StatefulWidget {
@@ -39,17 +40,17 @@ class _SecondLandingState extends State<SecondLanding> {
 
   List<FieldData> _selectionFields = [
     FieldData("What is your level of education?", "", Levels),
-    FieldData("What is your faculty?", "Choose your level of education first!", Bachelor),
-    FieldData("What course are you following?", "Choose your faculty first!", Bachelor_WeBIR),
+    FieldData("What is your faculty?", "Choose your level of education first!",
+        Bachelor),
+    FieldData("What course are you following?", "Choose your faculty first!",
+        Bachelor_WeBIR),
   ];
 
   @override
   Widget build(BuildContext context) {
     return BaseView<LandingController>(
-      onControllerReady: (controller){
-
-      },
-      builder: (context, controller, child){
+      onControllerReady: (controller) {},
+      builder: (context, controller, child) {
         return Scaffold(
           backgroundColor: Colors.white,
           body: AnnotatedRegion<SystemUiOverlayStyle>(
@@ -84,18 +85,34 @@ class _SecondLandingState extends State<SecondLanding> {
                               color: "4285F4",
                               crossAxisAlignment: CrossAxisAlignment.start,
                             ),
-                            SizedBox(height: 12*8,),
+                            SizedBox(
+                              height: 12 * 8,
+                            ),
                             Column(
                               children: _selectionFields
-                                  .asMap().entries.map((entry) => [entry.key, entry.value, onChangeHandler(entry.key)]) // Add index to first element
-                                  .map((item) => DropdownList(
-                                disabled: item[0] as int > fieldNeedsChoice, // disable all further elements
-                                labelText: (item[1] as FieldData).labelText,
-                                disabledLabelText: (item[1] as FieldData).disabledLabelText,
-                                contentList: (item[1] as FieldData).contentList,
-                                selectItem: (item[1] as FieldData).selected,
-                                onChange: item[2] as Function(ICalInterface),
-                              )).toList(),
+                                  .asMap()
+                                  .entries
+                                  .map((entry) => [
+                                        entry.key,
+                                        entry.value,
+                                        onChangeHandler(entry.key)
+                                      ]) // Add index to first element
+                                  .map((item) => DropdownList<ICalInterface>(
+                                        disabled: item[0] as int >
+                                            fieldNeedsChoice, // disable all further elements
+                                        labelText:
+                                            (item[1] as FieldData).labelText,
+                                        disabledLabelText:
+                                            (item[1] as FieldData)
+                                                .disabledLabelText,
+                                        contentList:
+                                            (item[1] as FieldData).contentList,
+                                        selectItem:
+                                            (item[1] as FieldData).selected,
+                                        onChange:
+                                            item[2] as Function(ICalInterface),
+                                      ))
+                                  .toList(),
                             ),
                           ],
                         ),
@@ -113,34 +130,35 @@ class _SecondLandingState extends State<SecondLanding> {
   }
 
   Function(ICalInterface) onChangeHandler(int index) => (ICalInterface value) {
-    setState(() {
-      fieldNeedsChoice = index +1;
-      _selectionFields[index].selected = value;
-      for (int i = fieldNeedsChoice; i < _selectionFields.length; i++){
-        _selectionFields[i].contentList = value.nextData ?? const [];
-        _selectionFields[i].selected = ICalInterface.getDefault();
-      }
-    });
-  };
-
+        setState(() {
+          fieldNeedsChoice = index + 1;
+          _selectionFields[index].selected = value;
+          for (int i = fieldNeedsChoice; i < _selectionFields.length; i++) {
+            _selectionFields[i].contentList = value.nextData ?? const [];
+            _selectionFields[i].selected = ICalInterface.getDefault();
+          }
+        });
+      };
 }
 
 class DropdownMultiSelectDialog extends StatefulWidget {
-  const DropdownMultiSelectDialog({Key? key,
+  const DropdownMultiSelectDialog({
+    Key? key,
     required this.labelText,
   }) : super(key: key);
   final String labelText;
   @override
-  _DropdownMultiSelectDialogState createState() => _DropdownMultiSelectDialogState();
+  _DropdownMultiSelectDialogState createState() =>
+      _DropdownMultiSelectDialogState();
 }
 
 class _DropdownMultiSelectDialogState extends State<DropdownMultiSelectDialog> {
-  String dropdownValue='Nothing Selected';
+  String dropdownValue = 'Nothing Selected';
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: ()=>showGroupMultiselect(context),
+      onTap: () => showGroupMultiselect(context),
       child: InputDecorator(
         decoration: InputDecoration(
           labelText: widget.labelText,
@@ -154,11 +172,11 @@ class _DropdownMultiSelectDialogState extends State<DropdownMultiSelectDialog> {
             children: [
               Text(
                 dropdownValue,
-                style: TextStyle(
-                    fontSize: 16
-                ),
+                style: TextStyle(fontSize: 16),
               ),
-              SizedBox(width: 158,), //THIS IS SO SCUFFED, IDGAF THO. LOOKS GOOD.
+              SizedBox(
+                width: 158,
+              ), //THIS IS SO SCUFFED, IDGAF THO. LOOKS GOOD.
               Icon(
                 Icons.arrow_drop_down,
                 color: Colors.grey.shade700,
