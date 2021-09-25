@@ -11,23 +11,42 @@ class AddSubjectPage extends StatefulWidget {
 }
 
 class _AddSubjectPageState extends State<AddSubjectPage> {
+  final _formkey = GlobalKey<FormState>();
+  final _focusNode = FocusNode();
+  void _onFieldSubmitted(String value) {
+    _focusNode.requestFocus();
+  }
+
   @override
   Widget build(BuildContext context) {
+    final onSubjectAdded = (String content) {
+      Navigator.pop(context);
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(content),
+      ));
+    };
     return BaseView<AddSubjectPageController>(
-      onControllerReady: (controller){
-
+      onControllerReady: (controller) {
+        controller.onSubjectAdded = onSubjectAdded;
       },
-      builder: (context, controller, child){
+      builder: (context, controller, child) {
         return Scaffold(
           appBar: AppBar(
             actions: [
               Padding(
                 padding: EdgeInsets.only(right: 20.0),
                 child: TextButton(
-                  onPressed: () {}, // TODO: ADD SUBJECT WITH FILLED IN PARAMETERS
+                  onPressed: () {
+                    if (_formkey.currentState!.validate()) {
+                      controller.addSubject();
+                    }
+                  }, // TODO: ADD SUBJECT WITH FILLED IN PARAMETERS
                   child: Text(
                     "Add",
-                    style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18),
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18),
                   ),
                 ),
               ),
@@ -57,7 +76,40 @@ class _AddSubjectPageState extends State<AddSubjectPage> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-
+                            Form(
+                              key: _formkey,
+                              child: TextFormField(
+                                decoration: InputDecoration(
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(30.0),
+                                    borderSide: BorderSide(),
+                                  ),
+                                  labelText: "Name",
+                                ),
+                                //validator: controller.validateName, TODO: doesn't work
+                                onChanged: controller.setSubjectName,
+                                autofocus: true,
+                                onFieldSubmitted: _onFieldSubmitted,
+                                textInputAction: TextInputAction.next,
+                                maxLength: 20,
+                              ),
+                            ),
+                            SizedBox(height: 2 * 8.0),
+                            Form(
+                              child: TextFormField(
+                                decoration: InputDecoration(
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(30.0),
+                                    borderSide: BorderSide(),
+                                  ),
+                                  labelText: "Location",
+                                ),
+                                onChanged: controller.setSubjectLocation,
+                                autofocus: true,
+                                onFieldSubmitted: _onFieldSubmitted,
+                                textInputAction: TextInputAction.next,
+                              ),
+                            ),
                           ],
                         ),
                       ),
@@ -70,6 +122,31 @@ class _AddSubjectPageState extends State<AddSubjectPage> {
         );
       },
     );
+  }
+}
 
+class CustomForm extends StatelessWidget {
+  final TextEditingController textEditingController;
+  final String labelText;
+
+  const CustomForm(
+      {Key? key, required this.labelText, required this.textEditingController})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Form(
+      key: key,
+      child: TextFormField(
+        decoration: InputDecoration(
+            labelText: labelText,
+            fillColor: Colors.white,
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(30.0),
+              borderSide: BorderSide(),
+            )),
+        controller: textEditingController,
+      ),
+    );
   }
 }

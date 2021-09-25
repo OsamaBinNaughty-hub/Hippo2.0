@@ -1,6 +1,6 @@
-import 'package:sembast/sembast.dart';
 import 'package:hippo_v2/data/app_database.dart';
 import 'package:hippo_v2/model/subjects.dart';
+import 'package:sembast/sembast.dart';
 
 class SubjectDao {
   static const String SUBJECT_STORE_NAME = 'subjects';
@@ -23,13 +23,15 @@ class SubjectDao {
 
   Future delete(Subject subject) async {
     final finder = Finder(filter: Filter.byKey(subject.id));
-    await _subjectStore.delete(await _db, finder:  finder);
+    await _subjectStore.delete(await _db, finder: finder);
   }
 
   Future<List<Subject>> getAllSortedByName() async {
     // finder object can also sort data.
-    final finder = Finder(sortOrders: [SortOrder('name'),]);
-    final recordSnapshots = await _subjectStore.find(await _db, finder:  finder);
+    final finder = Finder(sortOrders: [
+      SortOrder('name'),
+    ]);
+    final recordSnapshots = await _subjectStore.find(await _db, finder: finder);
 
     // making a List<Subject> out of List<RecordSnapshot>
     return recordSnapshots.map((snapshot) {
@@ -38,5 +40,4 @@ class SubjectDao {
       return subject;
     }).toList();
   }
-
 }

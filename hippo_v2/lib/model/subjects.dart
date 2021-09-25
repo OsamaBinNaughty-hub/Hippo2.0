@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-enum GradeType{
+enum GradeType {
   Theory,
   Practical,
   Oral,
@@ -15,7 +15,7 @@ enum GradeType{
   * 0 to 10 | 0 to 12 | 0 to 15 | 0 to 20 | 0 to 30 | 0 to 100 | 1 to 6
   * 6 to 1 | 0 to 5 | 0 to 7 | A to F (+ en - allowed)
    */
-class Grade{
+class Grade {
   String name;
   GradeType type;
   double value;
@@ -37,7 +37,6 @@ class Grade{
   double get average {
     return this.value;
   }
-
 }
 
 class GradeGroup extends Grade {
@@ -52,13 +51,13 @@ class GradeGroup extends Grade {
     note = '',
     DateTime? date,
   }) : super(
-      name: name,
-      type: type,
-      value: value,
-      weight: weight,
-      note: note,
-      date: date,
-  );
+          name: name,
+          type: type,
+          value: value,
+          weight: weight,
+          note: note,
+          date: date,
+        );
 
   /* //TODO: calculate_avg()
   double get average {
@@ -69,7 +68,7 @@ class GradeGroup extends Grade {
 */
 }
 
-class Subject{
+class Subject {
   int id;
   String name;
   DateTime? nextClass;
@@ -78,7 +77,7 @@ class Subject{
   String teacher;
   String note;
   Color color;
-  List<DateTime> schedule;
+  //List<DateTime> schedule;
 
   Subject({
     required this.id,
@@ -89,36 +88,36 @@ class Subject{
     required this.teacher,
     this.note = '',
     this.color = const Color(0xff4285F4),
-    this.schedule = const [],
+    //this.schedule = const [],
   });
 
   Map<String, dynamic> toMap() {
     return {
       'id': id,
-      'name':name,
+      'name': name,
       'nextClass': nextClass,
       'location': location,
       'teacher': teacher,
       'note': note,
-      'color': color,
-      'schedule': schedule,
+      'color': color.value,
+      //'schedule': schedule,
     };
   }
 
-  static Subject fromMap(Map<String, dynamic> map){
+  static Subject fromMap(Map<String, dynamic> map) {
     return Subject(
       id: map['id'],
-      name:map['name'],
+      name: map['name'],
       nextClass: map['nextClass'],
       location: map['location'],
       teacher: map['teacher'],
       note: map['note'],
-      color: map['color'],
-      schedule: map['schedule'],
+      color: Color(map['color']),
+      //schedule: map['schedule'],
     );
   }
 
-  Widget whatIsNextClass(){
+  Widget whatIsNextClass() {
     DateTime? next = this.nextClass;
     DateTime now = DateTime.now();
     DateFormat weekdayFormatter = DateFormat('EEEE');
@@ -129,16 +128,14 @@ class Subject{
       return ((dayOfYear - date.weekday + 10) / 7).floor();
     }
 
-
-    if(next != null){
-      if(weekNumber(next)==weekNumber(now)){
+    if (next != null) {
+      if (weekNumber(next) == weekNumber(now)) {
         String weekday = weekdayFormatter.format(next);
         String time = timeFormatter.format(next);
         return Text("${weekday} • ${time}");
       } else {
         return Text("No class this week");
       }
-
     } else {
       return Text("No more classes of this subject");
     }
@@ -284,6 +281,5 @@ class Subject{
     }
   }
   */
-
 
 }
